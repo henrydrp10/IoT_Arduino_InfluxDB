@@ -75,7 +75,7 @@ void setup() {
   int loopInterval = influxClient.getPushInterval() / DEFAULT_READS_PER_METRIC;
 
   influxClient.addMetricName("temperature");
-  influxClient.addMetricName("temperature");
+  influxClient.addMetricName("humidity");
   influxClient.addMetricName("barometric_pressure");
   influxClient.addMetricName("differential_pressure");
 }
