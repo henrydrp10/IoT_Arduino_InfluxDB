@@ -24,9 +24,9 @@ using namespace std;
 
 #define DEFAULT_ALERT_BOUND 5
 #define DEFAULT_OK_BOUND 0
-#define DEFAULT_STATUS_BYTE 0b0000000000100001
+#define DEFAULT_STATUS_BYTE 33
 
-// statusByte from MSB to LSB: lastMetricOK, >, <, ALERT, WARNING, OK 
+// statusByte from MSB to LSB: metricValue (bits 8-16), 0, 0, lastMetricOK, >, <, ALERT, WARNING, OK 
 
 #define EEPROM_INFLUX_HOST_OFFSET 1
 #define EEPROM_INFLUX_PORT_OFFSET 17
@@ -35,8 +35,9 @@ using namespace std;
 #define EEPROM_INFLUX_AUTH_TOKEN_OFFSET 223
 #define EEPROM_SENSOR_GROUP_OFFSET 324
 #define EEPROM_PUSH_INTERVAL_OFFSET 425
-#define EEPROM_STATUS_BYTE_OFFSET 429
-#define EEPROM_SIZE 431
+#define EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET 429
+#define EEPROM_STATUS_BYTE_ARRAY_OFFSET 430
+#define EEPROM_SIZE 510
 
 enum protocol { UDP, HTTP };
 enum monitoringStatus { OK, WARNING, ALERT };
@@ -77,7 +78,7 @@ class InfluxDBClient {
         void flushMetrics();
         void tick();
 
-        uint8_t getStatusByte();
+        uint16_t getStatusByte();
         void setStatusByte(uint16_t newStatusByte);
         int getPushInterval();
         void setPushInterval(int newPushInterval);
@@ -121,10 +122,12 @@ class InfluxDBClient {
         IPAddress sensorAddress;
         string sensorGroup;
 
-        enum monitoringStatus monitoringStatus = OK;
-        uint16_t statusByte = DEFAULT_STATUS_BYTE;
-        int warningToAlert = DEFAULT_OK_BOUND;
-
         unordered_map<string, uint8_t> metricsMap;
         unordered_map<uint8_t, string> valuesMap;
+
+        enum monitoringStatus monitoringStatus = OK;
+        int warningToAlert = DEFAULT_OK_BOUND;
+
+        uint16_t statusByte = DEFAULT_STATUS_BYTE;
+        uint8_t statusByteIdxPointer = 0;       
 };

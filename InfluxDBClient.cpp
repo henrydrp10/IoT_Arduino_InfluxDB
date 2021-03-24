@@ -155,6 +155,11 @@ void InfluxDBClient::addDatapoint(Datapoint dp)
 
 bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
 {
+    if (!this->metricsMap.contains(metric))
+    {
+        this->addMetricName(metric);
+    }
+    
     float minValue = min_element(valVect.begin(), valVect.end());
     float maxValue = max_element(valVect.begin(), valVect.end());
     float mean = accumulate(valVect.begin(), valVect.end(), 0) / (float) valVect.size();
@@ -176,6 +181,8 @@ bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector
     valVect.clear();
     values.clear();
 
+    // Most significant 8 bits (8-16) -> metric value
+
     for (size_t i = 8; i < 16; i++)
     {
         this->statusByte &= ~(1u << i);
@@ -183,30 +190,37 @@ bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector
     uint8_t metricBin = this->metricsMap.find(metric);
     this->statusByte = ((uint16_t)metricBin << 8) | this->statusByte;
 
+    // Bit 3 -> if value is lower than the lowerThreshold set up
+    // Bit 4 -> if value is higher than the higherThreshold set up
+    // Bit 5 -> if last metric values are OK
+
+    this->statusByte &= ~(1u << 3);
+    this->statusByte &= ~(1u << 4);
+    this->statusByte &= ~(1u << 5);
+
     if (minValue < lowerThreshold)
     {
-        this->statusByte |= 1u << 3;      // <
-        this->statusByte &= ~(1u << 5);    // lastMetric OK to 0
-        
+        this->statusByte |= 1u << 3;        // <
         return false;
     }
-    else if (maxValue > upperThreshold)
+    if (maxValue > upperThreshold)
     {
-        this->statusByte |= 1u << 4;   // >
-        this->statusByte &= ~(1u << 5); // lastMetricOK to 0
-
+        this->statusByte |= 1u << 4;        // >
         return false;
     }
-    else
+    if ((minValue >= lowerThreshold) && (maxValue <= upperThreshold))
     {
-        this->statusByte |= 1u << 5; // lastMetricOK to 1
-        
+        this->statusByte |= 1u << 5;        // lastMetricOK to 1
         return true;
     } 
 }
 
 void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric) 
 {
+    this->statusByte &= ~(1u << 0);
+    this->statusByte &= ~(1u << 1);
+    this->statusByte &= ~(1u << 2);
+
     switch (this->monitoringStatus) 
     {
         case OK:
@@ -214,14 +228,14 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
             if (!metricsOk) 
             {
                 uint16_t newStatusByte = this->statusByte;
-                newStatusByte ^= 1u << 0;
-                newStatusByte ^= 1u << 1;
-                setStatusByte(newStatusByte); // OK-> WARNING
+                newStatusByte |= 1u << 1;
+                setStatusByte(newStatusByte); // OK -> WARNING
 
                 this->monitoringStatus = WARNING;
                 setPushInterval(pushInterval / 2);
-                this->warningToAlert = 2;
                 readsPerMetric /= 2;
+
+                this->warningToAlert = 2;
             }
             break;
 
@@ -233,10 +247,8 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
                 if (this->warningToAlert < DEFAULT_OK_BOUND)
                 {
                     uint16_t newStatusByte = this->statusByte;
-                    newStatusByte ^= 0b00000011; // Flip bits 0 and 1 (WARNING -> OK)
-                    newStatusByte &= ~(1u << 3); // Set bits 3 and 4 to 0 (OK status, no <>)
-                    newStatusByte &= ~(1u << 4);
-                    setStatusByte(newStatusByte);
+                    newStatusByte |= 1u << 0;
+                    setStatusByte(newStatusByte); // WARNING -> OK
                     
                     this->monitoringStatus = OK;
                     setPushInterval(pushInterval * 2);
@@ -249,9 +261,8 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
                 if (this->warningToAlert >= DEFAULT_ALERT_BOUND)
                 {
                     uint16_t newStatusByte = this->statusByte;
-                    newStatusByte ^= 1u << 1;
-                    newStatusByte ^= 1u << 2;
-                    setStatusByte(newStatusByte);   // WARNING -> ALERT
+                    newStatusByte |= 1u << 2;
+                    setStatusByte(newStatusByte); // WARNING -> ALERT
 
                     this->monitoringStatus = ALERT;
                     setPushInterval(pushInterval / 2);
@@ -268,8 +279,7 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
                 if (this->warningToAlert < DEFAULT_ALERT_BOUND)
                 {
                     uint16_t newStatusByte = this->statusByte;
-                    newStatusByte ^= 1u << 1;
-                    newStatusByte ^= 1u << 2;
+                    newStatusByte |= 1u << 1;
                     setStatusByte(newStatusByte);   // ALERT -> WARNING
 
                     this->monitoringStatus = WARNING;
@@ -332,7 +342,13 @@ uint16_t InfluxDBClient::getStatusByte()
 void InfluxDBClient::setStatusByte(uint16_t newStatusByte)
 {
     this->statusByte = newStatusByte;
-    writeIntToDisk(EEPROM_STATUS_BYTE_OFFSET, EEPROM_SIZE, this->statusByte);
+    EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_OFFSET + this->statusByteIdxPointer, this->statusByte);
+
+    this->statusByteIdxPointer++;
+    if (this->statusByteIdxPointer >= (EEPROM_SIZE - EEPROM_STATUS_BYTE_ARRAY_OFFSET - 1))
+        this->statusByteIdxPointer = 0;
+    EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
+
     EEPROM.commit();
 }
 
@@ -344,7 +360,7 @@ int InfluxDBClient::getPushInterval()
 void InfluxDBClient::setPushInterval(int newPushInterval)
 {
     this->pushInterval = newPushInterval;
-    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_OFFSET, this->pushInterval);
+    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_OFFSET, &this->pushInterval);
 
     ostringstream configStr;
     vector<KeyValue> tags, values;
@@ -714,8 +730,8 @@ void InfluxDBClient::loadSensorConfig()
     loadStringIfExists(EEPROM_INFLUX_BUCKET_OFFSET, EEPROM_INFLUX_AUTH_TOKEN_OFFSET, &this->influxBucket);
     loadStringIfExists(EEPROM_INFLUX_AUTH_TOKEN_OFFSET, EEPROM_SENSOR_GROUP_OFFSET, &this->authToken);
     loadStringIfExists(EEPROM_SENSOR_GROUP_OFFSET, EEPROM_PUSH_INTERVAL_OFFSET, &this->sensorGroup);
-    loadStringIfExists(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_OFFSET, &this->pushInterval);
-    loadStringIfExists(EEPROM_STATUS_BYTE_OFFSET, EEPROM_SIZE, &this->statusByte);
+    readIntFromDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, &this->pushInterval);
+    EEPROM.get(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, &this->statusByteIdxPointer);
 
     int port = readIntFromDisk(EEPROM_INFLUX_PORT_OFFSET);
     if (port >= 0) {
@@ -731,8 +747,9 @@ void InfluxDBClient::saveSensorConfig()
     writeStringToDisk(EEPROM_INFLUX_BUCKET_OFFSET, EEPROM_INFLUX_AUTH_TOKEN_OFFSET, this->influxBucket);
     writeStringToDisk(EEPROM_INFLUX_AUTH_TOKEN_OFFSET, EEPROM_SENSOR_GROUP_OFFSET, this->authToken);
     writeStringToDisk(EEPROM_SENSOR_GROUP_OFFSET, EEPROM_PUSH_INTERVAL_OFFSET, this->sensorGroup);
-    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_OFFSET, this->pushInterval);
-    writeIntToDisk(EEPROM_STATUS_BYTE_OFFSET, EEPROM_SIZE, this->statusByte);
+    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->pushInterval);
+    EEPROM.write(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
+    
     EEPROM.commit();
     Serial.println("Saved config");
 }
