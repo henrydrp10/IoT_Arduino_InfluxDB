@@ -42,6 +42,7 @@ float lowerDifThreshold = -500;
 float upperDifThreshold = 500;
 
 int loopCount = 0;
+int loopInterval = 0;
 int readsPerMetric = 16;
 
 void setup() {
@@ -72,7 +73,7 @@ void setup() {
   status = bme.begin(0x77);
 
   influxClient = InfluxDBClient(INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN, "testsensor");
-  int loopInterval = influxClient.getPushInterval() / DEFAULT_READS_PER_METRIC;
+  loopInterval = influxClient.getPushInterval() / DEFAULT_READS_PER_METRIC;
 
   influxClient.addMetricName("temperature");
   influxClient.addMetricName("humidity");
@@ -110,7 +111,7 @@ void loop() {
     bool barOk = influxClient.createMetric("barometric_pressure", barVect, tags, values, tempString, lowerBarThreshold, upperBarThreshold);
     bool difOk = influxClient.createMetric("differential_pressure", difVect, tags, values, tempString, lowerDifThreshold, upperDifThreshold);
 
-    checkMonitoringLevels(tempOk && humOk && barOk && difOk, readsPerMetric);
+    influxClient.checkMonitoringLevels(tempOk && humOk && barOk && difOk, readsPerMetric);
     
     loopCount = 0;
     

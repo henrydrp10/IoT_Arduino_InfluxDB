@@ -17,9 +17,14 @@ KeyValue::KeyValue(uint8_t key, string value)
     this->value = value;
 }
 
-string KeyValue::toString()
+uint8_t KeyValue::getKey()
 {
-    return this->valuesMap.find(key) + "=" + value;
+    return this->key;
+}
+
+string KeyValue::getValue()
+{
+    return this->value;
 }
 
 Datapoint::Datapoint(uint8_t metric, vector<KeyValue> tags, vector<KeyValue> values)
@@ -29,23 +34,19 @@ Datapoint::Datapoint(uint8_t metric, vector<KeyValue> tags, vector<KeyValue> val
     this->values = values;
 }
 
-string Datapoint::toString()
+uint8_t Datapoint::getMetric()
 {
-    string str = this->valuesMap.find(this->metric);
+    return this->metric;
+}
 
-    for (int i = 0; i < this->tags.size(); i++)
-        str += "," + this->tags.at(i).toString();
+vector<KeyValue> Datapoint::getTags()
+{
+    return this->tags;
+}
 
-    str += " ";
-
-    for (int i = 0; i < this->values.size(); i++)
-    {
-        if (i > 0)
-            str += ",";
-        str += this->values.at(i).toString();
-    }
-
-    return str;
+vector<KeyValue> Datapoint::getValues()
+{
+    return this->values;
 }
 
 void Datapoint::addTag(KeyValue tag)
@@ -56,6 +57,30 @@ void Datapoint::addTag(KeyValue tag)
 void Datapoint::addValue(KeyValue value)
 {
     this->values.push_back(value);
+}
+
+string InfluxDBClient::keyValueToString(KeyValue kv)
+{
+    return this->valuesMap.at(kv.getKey()) + "=" + kv.getValue();
+}
+
+string InfluxDBClient::datapointToString(Datapoint dp)
+{
+    string str = this->valuesMap.at(dp.getMetric());
+
+    for (int i = 0; i < dp.getTags().size(); i++)
+        str += "," + this->keyValueToString(dp.getTags().at(i));
+
+    str += " ";
+
+    for (int i = 0; i < dp.getValues().size(); i++)
+    {
+        if (i > 0)
+            str += ",";
+        str += this->keyValueToString(dp.getValues().at(i));
+    }
+
+    return str;
 }
 
 InfluxDBClient::InfluxDBClient() {}
@@ -128,7 +153,7 @@ void InfluxDBClient::initMap()
 
 bool InfluxDBClient::addMetricName(string metric)
 {
-    if (!this->metricsMap.contains(metric))
+    if (this->metricsMap.count(metric) == 0)
     {
         if (this->metricsMap.size() <= (uint8_t) 255)
         {
@@ -142,41 +167,58 @@ bool InfluxDBClient::addMetricName(string metric)
 
 void InfluxDBClient::addDatapoint(Datapoint dp)
 {
-    dp.addTag(KeyValue(this->metricsMap.find("sensor_group"), this->sensorGroup));
-    dp.addTag(KeyValue(this->metricsMap.find("sensor_address"), this->sensorAddress.toString().c_str()));
+    dp.addTag(KeyValue(this->metricsMap.at("sensor_group"), this->sensorGroup));
+    dp.addTag(KeyValue(this->metricsMap.at("sensor_address"), this->sensorAddress.toString().c_str()));
 
     if (metricsBuffer.size() >= this->bufferSize)
     {
-        metricsBuffer.erase(0);
+        metricsBuffer.erase(metricsBuffer.begin());
     }
     metricsBuffer.push_back(dp);
 }
 
 
-bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
+bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
 {
-    if (!this->metricsMap.contains(metric))
+    if (this->metricsMap.count(metric) == 0)
     {
         this->addMetricName(metric);
     }
     
-    float minValue = min_element(valVect.begin(), valVect.end());
-    float maxValue = max_element(valVect.begin(), valVect.end());
-    float mean = accumulate(valVect.begin(), valVect.end(), 0) / (float) valVect.size();
+    float minValue = valVect.at(0);
+    float maxValue = valVect.at(0);
+    float sum = 0;
+
+    for (float value : valVect)
+    {
+        if (value < minValue)
+        {
+            minValue = value;
+        }
+        else if (value > maxValue)
+        {
+            maxValue = value;
+        }
+
+        sum += value;
+        
+    }
+
+    float mean = sum / valVect.size();
 
     tempString << minValue;
-    values.push_back(KeyValue(this->metricsMap.find("min_value"), tempString.str().c_str()));
+    values.push_back(KeyValue(this->metricsMap.at("min_value"), tempString.str().c_str()));
     tempString.str("");
 
     tempString << mean;
-    values.push_back(KeyValue(this->metricsMap.find("mean_value"), tempString.str().c_str()));
+    values.push_back(KeyValue(this->metricsMap.at("mean_value"), tempString.str().c_str()));
     tempString.str("");
 
     tempString << maxValue;
-    values.push_back(KeyValue(this->metricsMap.find("max_value"), tempString.str().c_str()));
+    values.push_back(KeyValue(this->metricsMap.at("max_value"), tempString.str().c_str()));
     tempString.str("");
 
-    influxClient.addDatapoint(Datapoint(metric, tags, values));
+    this->addDatapoint(Datapoint(this->metricsMap.at(metric), tags, values));
     
     valVect.clear();
     values.clear();
@@ -187,7 +229,7 @@ bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector
     {
         this->statusByte &= ~(1u << i);
     }
-    uint8_t metricBin = this->metricsMap.find(metric);
+    uint8_t metricBin = this->metricsMap.at(metric);
     this->statusByte = ((uint16_t)metricBin << 8) | this->statusByte;
 
     // Bit 3 -> if value is lower than the lowerThreshold set up
@@ -215,7 +257,7 @@ bool InfluxDBClient::createMetric(uint8_t metric, vector<float> &valVect, vector
     } 
 }
 
-void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric) 
+void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric) 
 {
     this->statusByte &= ~(1u << 0);
     this->statusByte &= ~(1u << 1);
@@ -223,7 +265,7 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
 
     switch (this->monitoringStatus) 
     {
-        case OK:
+        case OK_:
 
             if (!metricsOk) 
             {
@@ -250,7 +292,7 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, &int readsPerMetric)
                     newStatusByte |= 1u << 0;
                     setStatusByte(newStatusByte); // WARNING -> OK
                     
-                    this->monitoringStatus = OK;
+                    this->monitoringStatus = OK_;
                     setPushInterval(pushInterval * 2);
                     readsPerMetric *= 2;
                 }
@@ -357,17 +399,22 @@ int InfluxDBClient::getPushInterval()
     return this->pushInterval;
 }
 
+void writeIntToDisk(int address, int value);
 void InfluxDBClient::setPushInterval(int newPushInterval)
 {
     this->pushInterval = newPushInterval;
-    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_OFFSET, &this->pushInterval);
+    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, this->pushInterval);
 
     ostringstream configStr;
-    vector<KeyValue> tags, values;
+    vector<KeyValue> configTags, configValues;
 
     configStr << newPushInterval;
-    configValues.push_back(KeyValue(this->metricsMap.find("push_interval"), configStr.str().c_str()));
-    influxClient.addDatapoint(this->metricsMap.find("sensor_config"), tags, values);
+
+    KeyValue kv = KeyValue(this->metricsMap.at("push_interval"), configStr.str().c_str());
+    configValues.push_back(kv);
+
+    Datapoint dp = Datapoint(this->metricsMap.at("sensor_config"), configTags, configValues);
+    this->addDatapoint(dp);
 
     EEPROM.commit();
 }
@@ -646,7 +693,7 @@ string InfluxDBClient::makeHTTPRequestBody(vector<Datapoint> metrics)
     string body = "";
     for (int i = 0; i < metrics.size(); i++)
     {
-        body += metrics.at(i).toString() + "\n";
+        body += this->datapointToString(metrics.at(i)) + "\n";
     }
     return body;
 }
@@ -697,6 +744,13 @@ int readIntFromDisk(int address)
     return value;
 }
 
+uint8_t readUint8FromDisk(int address)
+{
+    uint8_t value;
+    EEPROM.get(address, value);
+    return value;
+}
+
 string readStringFromDisk(int address, int addressUpperBound) 
 {   
     std::ostringstream value;
@@ -730,8 +784,8 @@ void InfluxDBClient::loadSensorConfig()
     loadStringIfExists(EEPROM_INFLUX_BUCKET_OFFSET, EEPROM_INFLUX_AUTH_TOKEN_OFFSET, &this->influxBucket);
     loadStringIfExists(EEPROM_INFLUX_AUTH_TOKEN_OFFSET, EEPROM_SENSOR_GROUP_OFFSET, &this->authToken);
     loadStringIfExists(EEPROM_SENSOR_GROUP_OFFSET, EEPROM_PUSH_INTERVAL_OFFSET, &this->sensorGroup);
-    readIntFromDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, &this->pushInterval);
-    EEPROM.get(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, &this->statusByteIdxPointer);
+    this->pushInterval = readIntFromDisk(EEPROM_PUSH_INTERVAL_OFFSET);
+    this->statusByteIdxPointer = readUint8FromDisk(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET);
 
     int port = readIntFromDisk(EEPROM_INFLUX_PORT_OFFSET);
     if (port >= 0) {
@@ -747,7 +801,7 @@ void InfluxDBClient::saveSensorConfig()
     writeStringToDisk(EEPROM_INFLUX_BUCKET_OFFSET, EEPROM_INFLUX_AUTH_TOKEN_OFFSET, this->influxBucket);
     writeStringToDisk(EEPROM_INFLUX_AUTH_TOKEN_OFFSET, EEPROM_SENSOR_GROUP_OFFSET, this->authToken);
     writeStringToDisk(EEPROM_SENSOR_GROUP_OFFSET, EEPROM_PUSH_INTERVAL_OFFSET, this->sensorGroup);
-    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->pushInterval);
+    writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, this->pushInterval);
     EEPROM.write(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
     
     EEPROM.commit();

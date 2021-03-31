@@ -40,12 +40,13 @@ using namespace std;
 #define EEPROM_SIZE 510
 
 enum protocol { UDP, HTTP };
-enum monitoringStatus { OK, WARNING, ALERT };
+enum monitoringStatus { OK_, WARNING, ALERT };
 
 class KeyValue {
     public:
         KeyValue(uint8_t key, string value);
-        string toString();
+        uint8_t getKey();
+        string getValue();
     private:
         uint8_t key;
         string value;
@@ -54,7 +55,9 @@ class KeyValue {
 class Datapoint {
     public:
         Datapoint(uint8_t metric, vector<KeyValue> tags, vector<KeyValue> values);
-        string toString();
+        uint8_t getMetric();
+        vector<KeyValue> getTags();
+        vector<KeyValue> getValues();
         void addTag(KeyValue tag);
         void addValue(KeyValue value);
     private:
@@ -69,11 +72,12 @@ class InfluxDBClient {
         InfluxDBClient(string influxHost, int influxPort, string influxOrg, string influxBucket, string authToken, string sensorGroup);
         InfluxDBClient(string influxHost, int influxPort, string influxOrg, string influxBucket, string authToken, enum protocol protocol,
                        int pushInterval, int bufferSize, int httpRetries, int httpTimeout, int httpRetryDelay, string sensorGroup);
-        
+        string keyValueToString(KeyValue kv);
+        string datapointToString(Datapoint dp);
         void addDatapoint(Datapoint dp);
         bool addMetricName(string metric);
         bool createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold);
-        void checkMonitoringLevels(bool metricsOk);
+        void checkMonitoringLevels(bool metricsOk, int &readsPerMetric);
 
         void flushMetrics();
         void tick();
@@ -125,7 +129,7 @@ class InfluxDBClient {
         unordered_map<string, uint8_t> metricsMap;
         unordered_map<uint8_t, string> valuesMap;
 
-        enum monitoringStatus monitoringStatus = OK;
+        enum monitoringStatus monitoringStatus = OK_;
         int warningToAlert = DEFAULT_OK_BOUND;
 
         uint16_t statusByte = DEFAULT_STATUS_BYTE;
