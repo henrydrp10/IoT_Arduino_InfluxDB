@@ -386,7 +386,7 @@ void InfluxDBClient::setStatusByte(uint16_t newStatusByte)
     this->statusByte = newStatusByte;
     EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_OFFSET + this->statusByteIdxPointer, this->statusByte);
 
-    this->statusByteIdxPointer++;
+    this->statusByteIdxPointer += 2;
     if (this->statusByteIdxPointer >= (EEPROM_SIZE - EEPROM_STATUS_BYTE_ARRAY_OFFSET - 1))
         this->statusByteIdxPointer = 0;
     EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
