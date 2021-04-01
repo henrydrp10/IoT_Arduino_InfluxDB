@@ -11,6 +11,11 @@ using namespace std;
 
 WiFiServer wifiServer(DEFAULT_WIFI_SERVER_PORT);
 
+void writeIntToDisk(int address, int value);
+void writeUint8ToDisk(int address, uint8_t value);
+void writeUint16ToDisk(int address, uint16_t value);
+uint16_t readUint16FromDisk(int address);
+
 KeyValue::KeyValue(uint8_t key, string value)
 {
     this->key = key;
@@ -80,7 +85,7 @@ string InfluxDBClient::datapointToString(Datapoint dp)
         str += this->keyValueToString(dp.getValues().at(i));
     }
 
-    return str;
+    return str.c_str();
 }
 
 InfluxDBClient::InfluxDBClient() {}
@@ -180,6 +185,7 @@ void InfluxDBClient::addDatapoint(Datapoint dp)
 
 bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
 {
+
     if (this->metricsMap.count(metric) == 0)
     {
         this->addMetricName(metric);
@@ -229,6 +235,12 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     {
         this->statusByte &= ~(1u << i);
     }
+
+    Serial.print("This is metric: ");
+    Serial.printf("%s\n", metric.c_str());
+    Serial.print("With binary number: ");
+    Serial.println(this->metricsMap.at(metric));
+
     uint8_t metricBin = this->metricsMap.at(metric);
     this->statusByte = ((uint16_t)metricBin << 8) | this->statusByte;
 
@@ -243,22 +255,36 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     if (minValue < lowerThreshold)
     {
         this->statusByte |= 1u << 3;        // <
+
+        Serial.print("The value of the status byte is: ");
+        Serial.println(this->statusByte);
+
         return false;
     }
     if (maxValue > upperThreshold)
     {
         this->statusByte |= 1u << 4;        // >
+
+        Serial.print("The value of the status byte is: ");
+        Serial.println(this->statusByte);
+
         return false;
     }
     if ((minValue >= lowerThreshold) && (maxValue <= upperThreshold))
     {
         this->statusByte |= 1u << 5;        // lastMetricOK to 1
+
+        Serial.print("The value of the status byte is: ");
+        Serial.println(this->statusByte);
+
         return true;
     } 
+
 }
 
 void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric) 
 {
+
     this->statusByte &= ~(1u << 0);
     this->statusByte &= ~(1u << 1);
     this->statusByte &= ~(1u << 2);
@@ -279,6 +305,12 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
 
                 this->warningToAlert = 2;
             }
+            else
+            {
+                uint16_t newStatusByte = this->statusByte;
+                newStatusByte |= 1u << 0;
+                setStatusByte(newStatusByte); // OK
+            }
             break;
 
         case WARNING:
@@ -296,6 +328,12 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
                     setPushInterval(pushInterval * 2);
                     readsPerMetric *= 2;
                 }
+                else
+                {
+                    uint16_t newStatusByte = this->statusByte;
+                    newStatusByte |= 1u << 1;
+                    setStatusByte(newStatusByte); // WARNING
+                }
             }     
             else
             {
@@ -309,7 +347,13 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
                     this->monitoringStatus = ALERT;
                     setPushInterval(pushInterval / 2);
                     readsPerMetric /= 2;
-                }  
+                } 
+                else
+                {
+                    uint16_t newStatusByte = this->statusByte;
+                    newStatusByte |= 1u << 1;
+                    setStatusByte(newStatusByte); // WARNING
+                } 
             }
             break;
 
@@ -328,18 +372,51 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
                     setPushInterval(pushInterval * 2);
                     readsPerMetric *= 2;
                 }
+                else
+                {
+                    uint16_t newStatusByte = this->statusByte;
+                    newStatusByte |= 1u << 2;
+                    setStatusByte(newStatusByte);   // ALERT
+                }
             }     
             else
             {
                 this->warningToAlert++;
+                uint16_t newStatusByte = this->statusByte;
+                newStatusByte |= 1u << 2;
+                setStatusByte(newStatusByte);   // ALERT
             }
 
             break;
     }  
+
+    Serial.print("The monitoring status is: ");
+    Serial.println(this->monitoringStatus);
+    Serial.print("The status byte is: ");
+    Serial.println(this->statusByte);
+
+    Serial.print("From EEPROM: ");
+    Serial.println(readUint16FromDisk(EEPROM_STATUS_BYTE_ARRAY_OFFSET + this->statusByteIdxPointer - 2));
+
+}
+
+enum monitoringStatus InfluxDBClient::getMonitoringStatus()
+{
+    return this->monitoringStatus;
 }
 
 void InfluxDBClient::tick()
 {
+
+    Serial.println("Buffer:");
+    for (int i = 0; i < this->metricsBuffer.size(); i++)
+    {
+        Datapoint dp = this->metricsBuffer.at(i);
+        string str = datapointToString(dp);
+        Serial.printf("%s\n", str);
+    }
+    
+
     WiFiClient client = wifiServer.available();
     if (client)
         this->handleHTTPRequest(client);
@@ -383,15 +460,27 @@ uint16_t InfluxDBClient::getStatusByte()
 
 void InfluxDBClient::setStatusByte(uint16_t newStatusByte)
 {
+    Serial.print("New status byte: ");
+    Serial.println(newStatusByte);
+    Serial.print("The old one was: ");
+    Serial.println(this->statusByte);
+
     this->statusByte = newStatusByte;
-    EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_OFFSET + this->statusByteIdxPointer, this->statusByte);
+    writeUint16ToDisk(EEPROM_STATUS_BYTE_ARRAY_OFFSET + (int) this->statusByteIdxPointer, this->statusByte);
 
     this->statusByteIdxPointer += 2;
     if (this->statusByteIdxPointer >= (EEPROM_SIZE - EEPROM_STATUS_BYTE_ARRAY_OFFSET - 1))
         this->statusByteIdxPointer = 0;
-    EEPROM.put(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
+    writeUint8ToDisk(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
 
     EEPROM.commit();
+
+    Serial.println(this->statusByte);
+}
+
+uint8_t InfluxDBClient::getStatusByteIdxPointer()
+{
+    return this->statusByteIdxPointer;
 }
 
 int InfluxDBClient::getPushInterval()
@@ -399,7 +488,6 @@ int InfluxDBClient::getPushInterval()
     return this->pushInterval;
 }
 
-void writeIntToDisk(int address, int value);
 void InfluxDBClient::setPushInterval(int newPushInterval)
 {
     this->pushInterval = newPushInterval;
@@ -724,6 +812,16 @@ void writeIntToDisk(int address, int value)
     EEPROM.put(address, value);
 }
 
+void writeUint8ToDisk(int address, uint8_t value)
+{
+    EEPROM.put(address, value);
+}
+
+void writeUint16ToDisk(int address, uint16_t value)
+{
+    EEPROM.put(address, value);
+}
+
 void writeStringToDisk(int address, int addressUpperBound, string value)
 {
     for(char const c: value) 
@@ -747,6 +845,13 @@ int readIntFromDisk(int address)
 uint8_t readUint8FromDisk(int address)
 {
     uint8_t value;
+    EEPROM.get(address, value);
+    return value;
+}
+
+uint16_t readUint16FromDisk(int address)
+{
+    uint16_t value;
     EEPROM.get(address, value);
     return value;
 }
@@ -777,6 +882,26 @@ void loadStringIfExists(int address, int addressUpperBound, string *value) {
     }
 }
 
+void loadIntIfExists(int address, int *value)
+{
+    int readValue = readIntFromDisk(address);
+    if (readValue != 0)
+    {
+        *value = readValue;
+    }
+    
+}
+
+void loadUint8IfExists(int address, uint8_t *value)
+{
+    uint8_t readValue = readUint8FromDisk(address);
+    if (readValue != 255)
+    {
+        *value = readValue;
+    }
+    
+}
+
 void InfluxDBClient::loadSensorConfig()
 {
     loadStringIfExists(EEPROM_INFLUX_HOST_OFFSET, EEPROM_INFLUX_PORT_OFFSET, &this->influxHost);
@@ -784,8 +909,8 @@ void InfluxDBClient::loadSensorConfig()
     loadStringIfExists(EEPROM_INFLUX_BUCKET_OFFSET, EEPROM_INFLUX_AUTH_TOKEN_OFFSET, &this->influxBucket);
     loadStringIfExists(EEPROM_INFLUX_AUTH_TOKEN_OFFSET, EEPROM_SENSOR_GROUP_OFFSET, &this->authToken);
     loadStringIfExists(EEPROM_SENSOR_GROUP_OFFSET, EEPROM_PUSH_INTERVAL_OFFSET, &this->sensorGroup);
-    this->pushInterval = readIntFromDisk(EEPROM_PUSH_INTERVAL_OFFSET);
-    this->statusByteIdxPointer = readUint8FromDisk(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET);
+    loadIntIfExists(EEPROM_PUSH_INTERVAL_OFFSET, &this->pushInterval);
+    loadUint8IfExists(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, &this->statusByteIdxPointer);
 
     int port = readIntFromDisk(EEPROM_INFLUX_PORT_OFFSET);
     if (port >= 0) {

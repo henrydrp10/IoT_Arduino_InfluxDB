@@ -78,6 +78,7 @@ class InfluxDBClient {
         bool addMetricName(string metric);
         bool createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold);
         void checkMonitoringLevels(bool metricsOk, int &readsPerMetric);
+        enum monitoringStatus getMonitoringStatus();
 
         void flushMetrics();
         void tick();
@@ -86,6 +87,8 @@ class InfluxDBClient {
         void setStatusByte(uint16_t newStatusByte);
         int getPushInterval();
         void setPushInterval(int newPushInterval);
+
+        uint8_t getStatusByteIdxPointer();
 
     private:
         void initMap();
