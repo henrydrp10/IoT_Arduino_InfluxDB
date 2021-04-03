@@ -26,7 +26,7 @@ using namespace std;
 #define DEFAULT_OK_BOUND 0
 #define DEFAULT_STATUS_BYTE 33
 
-// statusByte from MSB to LSB: metricValue (bits 8-16), 0, 0, lastMetricOK, >, <, ALERT, WARNING, OK 
+// statusByte from MSB to LSB: metricValue (bits 8-16), 0, 0, lastMetricOK, >, <, ALERT, WARNING, OK
 
 #define EEPROM_INFLUX_HOST_OFFSET 1
 #define EEPROM_INFLUX_PORT_OFFSET 17
@@ -75,7 +75,7 @@ class InfluxDBClient {
         string keyValueToString(KeyValue kv);
         string datapointToString(Datapoint dp);
         void addDatapoint(Datapoint dp);
-        bool addMetricName(string metric);
+        void addMetricName(string metric);
         bool createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold);
         void checkMonitoringLevels(bool metricsOk, int &readsPerMetric);
         enum monitoringStatus getMonitoringStatus();
@@ -136,5 +136,5 @@ class InfluxDBClient {
         int warningToAlert = DEFAULT_OK_BOUND;
 
         uint16_t statusByte = DEFAULT_STATUS_BYTE;
-        uint8_t statusByteIdxPointer = 0;       
+        uint8_t statusByteIdxPointer = 0;
 };

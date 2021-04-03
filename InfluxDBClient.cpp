@@ -2,6 +2,7 @@
 
 #include <InfluxDBClient.h>
 #include "Arduino.h"
+#include <cstdlib>
 #include <sstream>
 #include <algorithm>
 #include <WiFi.h>
@@ -66,12 +67,14 @@ void Datapoint::addValue(KeyValue value)
 
 string InfluxDBClient::keyValueToString(KeyValue kv)
 {
-    return this->valuesMap.at(kv.getKey()) + "=" + kv.getValue();
+    string str = this->valuesMap.at(kv.getKey()) + "=" + kv.getValue();
+    return str.c_str();
 }
 
 string InfluxDBClient::datapointToString(Datapoint dp)
 {
-    string str = this->valuesMap.at(dp.getMetric());
+    uint8_t metric = dp.getMetric();
+    string str = this->valuesMap.at(metric);
 
     for (int i = 0; i < dp.getTags().size(); i++)
         str += "," + this->keyValueToString(dp.getTags().at(i));
@@ -82,6 +85,7 @@ string InfluxDBClient::datapointToString(Datapoint dp)
     {
         if (i > 0)
             str += ",";
+
         str += this->keyValueToString(dp.getValues().at(i));
     }
 
@@ -156,18 +160,10 @@ void InfluxDBClient::initMap()
     this->valuesMap.insert({10, "max_value"});
 }
 
-bool InfluxDBClient::addMetricName(string metric)
+void InfluxDBClient::addMetricName(string metric)
 {
-    if (this->metricsMap.count(metric) == 0)
-    {
-        if (this->metricsMap.size() <= (uint8_t) 255)
-        {
-            this->metricsMap.insert({metric, this->metricsMap.size()});
-            this->valuesMap.insert({this->metricsMap.size(), metric});
-        }
-        else return false;
-    }
-    return true;
+    this->metricsMap.insert({metric, this->metricsMap.size()});
+    this->valuesMap.insert({this->valuesMap.size(), metric});
 }
 
 void InfluxDBClient::addDatapoint(Datapoint dp)
@@ -236,11 +232,6 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
         this->statusByte &= ~(1u << i);
     }
 
-    Serial.print("This is metric: ");
-    Serial.printf("%s\n", metric.c_str());
-    Serial.print("With binary number: ");
-    Serial.println(this->metricsMap.at(metric));
-
     uint8_t metricBin = this->metricsMap.at(metric);
     this->statusByte = ((uint16_t)metricBin << 8) | this->statusByte;
 
@@ -255,28 +246,16 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     if (minValue < lowerThreshold)
     {
         this->statusByte |= 1u << 3;        // <
-
-        Serial.print("The value of the status byte is: ");
-        Serial.println(this->statusByte);
-
         return false;
     }
     if (maxValue > upperThreshold)
     {
         this->statusByte |= 1u << 4;        // >
-
-        Serial.print("The value of the status byte is: ");
-        Serial.println(this->statusByte);
-
         return false;
     }
     if ((minValue >= lowerThreshold) && (maxValue <= upperThreshold))
     {
         this->statusByte |= 1u << 5;        // lastMetricOK to 1
-
-        Serial.print("The value of the status byte is: ");
-        Serial.println(this->statusByte);
-
         return true;
     }
 
@@ -389,15 +368,6 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
 
             break;
     }
-
-    Serial.print("The monitoring status is: ");
-    Serial.println(this->monitoringStatus);
-    Serial.print("The status byte is: ");
-    Serial.println(this->statusByte);
-
-    Serial.print("From EEPROM: ");
-    Serial.println(readUint16FromDisk(EEPROM_STATUS_BYTE_ARRAY_OFFSET + this->statusByteIdxPointer - 2));
-
 }
 
 enum monitoringStatus InfluxDBClient::getMonitoringStatus()
@@ -413,9 +383,8 @@ void InfluxDBClient::tick()
     {
         Datapoint dp = this->metricsBuffer.at(i);
         string str = datapointToString(dp);
-        Serial.printf("%s\n", str);
+        Serial.printf("%s\n", str.c_str());
     }
-
 
     WiFiClient client = wifiServer.available();
     if (client)
