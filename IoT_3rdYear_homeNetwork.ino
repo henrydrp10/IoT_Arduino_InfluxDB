@@ -11,17 +11,11 @@
 #include <sstream>
 using namespace std;
 
-#define INFLUXDB_HOST "192.168.0.3"
+#define INFLUXDB_HOST "192.168.1.40"
 #define INFLUXDB_PORT 8086
 #define INFLUXDB_TOKEN "FEtP4M2cosTnZ2SCLmFgr8ELeW10R8qLWwl7B6kXOJuOUbYp6NUK3NCmVtglsBeg3M5pI6_cNwWzEnO-vnairQ=="
 #define INFLUXDB_ORG "iot"
 #define INFLUXDB_BUCKET "eduroamIoT"
-
-#define INFLUXDB_HOST1 "192.168.1.40"
-#define INFLUXDB_PORT1 8086
-#define INFLUXDB_TOKEN1 "73ugAny7dK14n4q5jns9YmT_TM8g9GrSoXVWTF8WSeIA2rvCdC4OaB2giQKkUeb4bBgIXgeR1O8T6T64Pol2Ow=="
-#define INFLUXDB_ORG1 "uom"
-#define INFLUXDB_BUCKET1 "eduroamIoT"
 
 #define DEFAULT_READS_PER_METRIC 16
 
@@ -80,7 +74,7 @@ void setup() {
   bool status;
   status = bme.begin(0x77);
 
-  influxClient = InfluxDBClient(INFLUXDB_HOST1, INFLUXDB_PORT1, INFLUXDB_ORG1, INFLUXDB_BUCKET1, INFLUXDB_TOKEN1, "testsensor");
+  influxClient = InfluxDBClient(INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN, "testsensor");
   loopInterval = influxClient.getPushInterval() / readsPerMetric;
 
   Serial.print("The statusByte -> ");
@@ -117,15 +111,15 @@ void loop() {
   barVect.push_back(bar_p);
   difVect.push_back(dif_p);
 
-  vector<KeyValue> tags, values;
+  vector<KeyValue> values;
   std::ostringstream tempString;
 
   if (loopCount >= (readsPerMetric - 1)) {
     
-    bool tempOk = influxClient.createMetric("temperature", tempVect, tags, values, tempString, lowerTempThreshold, upperTempThreshold);
-    bool humOk = influxClient.createMetric("humidity", humVect, tags, values, tempString, lowerHumThreshold, upperHumThreshold);
-    bool barOk = influxClient.createMetric("barometric_pressure", barVect, tags, values, tempString, lowerBarThreshold, upperBarThreshold);
-    bool difOk = influxClient.createMetric("differential_pressure", difVect, tags, values, tempString, lowerDifThreshold, upperDifThreshold);
+    bool tempOk = influxClient.createMetric("temperature", tempVect, values, tempString, lowerTempThreshold, upperTempThreshold);
+    bool humOk = influxClient.createMetric("humidity", humVect, values, tempString, lowerHumThreshold, upperHumThreshold);
+    bool barOk = influxClient.createMetric("barometric_pressure", barVect, values, tempString, lowerBarThreshold, upperBarThreshold);
+    bool difOk = influxClient.createMetric("differential_pressure", difVect, values, tempString, lowerDifThreshold, upperDifThreshold);
 
     influxClient.checkMonitoringLevels(tempOk && humOk && barOk && difOk, readsPerMetric);
 
@@ -166,11 +160,11 @@ void printValues(float temp, float hum, float bar_p, float dif_p) {
   Serial.print(hum);
   Serial.println(" %");
 
-  Serial.print("Pressure = ");
+  Serial.print("Bar Pressure = ");
   Serial.print(bar_p);
   Serial.println(" hPa");
 
-  Serial.print("Pressure2 = ");
+  Serial.print("Diff Pressure2 = ");
   Serial.print(dif_p);
   Serial.println(" bar");
   

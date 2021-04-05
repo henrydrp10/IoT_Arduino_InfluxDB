@@ -54,15 +54,13 @@ class KeyValue {
 
 class Datapoint {
     public:
-        Datapoint(uint8_t metric, vector<KeyValue> tags, vector<KeyValue> values);
+        Datapoint(uint8_t metric, vector<KeyValue> values);
         uint8_t getMetric();
-        vector<KeyValue> getTags();
         vector<KeyValue> getValues();
         void addTag(KeyValue tag);
         void addValue(KeyValue value);
     private:
         uint8_t metric;
-        vector<KeyValue> tags;
         vector<KeyValue> values;
 };
 
@@ -76,19 +74,16 @@ class InfluxDBClient {
         string datapointToString(Datapoint dp);
         void addDatapoint(Datapoint dp);
         void addMetricName(string metric);
-        bool createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold);
+        bool createMetric(string metric, vector<float> &valVect, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold);
         void checkMonitoringLevels(bool metricsOk, int &readsPerMetric);
         enum monitoringStatus getMonitoringStatus();
-
         void flushMetrics();
         void tick();
-
         uint16_t getStatusByte();
         void setStatusByte(uint16_t newStatusByte);
+        uint8_t getStatusByteIdxPointer();
         int getPushInterval();
         void setPushInterval(int newPushInterval);
-
-        uint8_t getStatusByteIdxPointer();
 
     private:
         void initMap();
@@ -104,6 +99,7 @@ class InfluxDBClient {
         string makeHTTPRequestBody(vector<Datapoint> metrics);
         bool checkHTTPConnection();
         bool getHTTPConnection();
+        void publishSensorConfig();
         void loadSensorConfig();
         void saveSensorConfig();
 
@@ -128,13 +124,10 @@ class InfluxDBClient {
         int retriesCount = 0;
         IPAddress sensorAddress;
         string sensorGroup;
-
         unordered_map<string, uint8_t> metricsMap;
         unordered_map<uint8_t, string> valuesMap;
-
         enum monitoringStatus monitoringStatus = OK_;
         int warningToAlert = DEFAULT_OK_BOUND;
-
         uint16_t statusByte = DEFAULT_STATUS_BYTE;
         uint8_t statusByteIdxPointer = 0;
 };

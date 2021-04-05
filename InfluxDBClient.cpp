@@ -33,10 +33,9 @@ string KeyValue::getValue()
     return this->value;
 }
 
-Datapoint::Datapoint(uint8_t metric, vector<KeyValue> tags, vector<KeyValue> values)
+Datapoint::Datapoint(uint8_t metric, vector<KeyValue> values)
 {
     this->metric = metric;
-    this->tags = tags;
     this->values = values;
 }
 
@@ -45,19 +44,9 @@ uint8_t Datapoint::getMetric()
     return this->metric;
 }
 
-vector<KeyValue> Datapoint::getTags()
-{
-    return this->tags;
-}
-
 vector<KeyValue> Datapoint::getValues()
 {
     return this->values;
-}
-
-void Datapoint::addTag(KeyValue tag)
-{
-    this->tags.push_back(tag);
 }
 
 void Datapoint::addValue(KeyValue value)
@@ -73,11 +62,15 @@ string InfluxDBClient::keyValueToString(KeyValue kv)
 
 string InfluxDBClient::datapointToString(Datapoint dp)
 {
+    vector<KeyValue> dpTags;
+    dpTags.push_back(KeyValue(this->metricsMap.at("sensor_group"), this->sensorGroup));
+    dpTags.push_back(KeyValue(this->metricsMap.at("sensor_address"), this->sensorAddress.toString().c_str()));
+
     uint8_t metric = dp.getMetric();
     string str = this->valuesMap.at(metric);
 
-    for (int i = 0; i < dp.getTags().size(); i++)
-        str += "," + this->keyValueToString(dp.getTags().at(i));
+    for (int i = 0; i < dpTags.size(); i++)
+        str += "," + this->keyValueToString(dpTags.at(i));
 
     str += " ";
 
@@ -106,8 +99,8 @@ InfluxDBClient::InfluxDBClient(string influxHost, int influxPort, string influxO
     this->sensorGroup = sensorGroup;
     wifiServer.begin();
     EEPROM.begin(EEPROM_SIZE);
-    this->loadSensorConfig();
     this->initMap();
+    this->loadSensorConfig();
 }
 
 InfluxDBClient::InfluxDBClient(string influxHost, int influxPort, string influxOrg, string influxBucket, string authToken, enum protocol protocol,
@@ -129,8 +122,8 @@ InfluxDBClient::InfluxDBClient(string influxHost, int influxPort, string influxO
     this->sensorGroup = sensorGroup;
     wifiServer.begin();
     EEPROM.begin(EEPROM_SIZE);
-    this->loadSensorConfig();
     this->initMap();
+    this->loadSensorConfig();
 }
 
 void InfluxDBClient::initMap()
@@ -168,8 +161,8 @@ void InfluxDBClient::addMetricName(string metric)
 
 void InfluxDBClient::addDatapoint(Datapoint dp)
 {
-    dp.addTag(KeyValue(this->metricsMap.at("sensor_group"), this->sensorGroup));
-    dp.addTag(KeyValue(this->metricsMap.at("sensor_address"), this->sensorAddress.toString().c_str()));
+    // dp.addTag(KeyValue(this->metricsMap.at("sensor_group"), this->sensorGroup));
+    // dp.addTag(KeyValue(this->metricsMap.at("sensor_address"), this->sensorAddress.toString().c_str()));
 
     if (metricsBuffer.size() >= this->bufferSize)
     {
@@ -179,7 +172,7 @@ void InfluxDBClient::addDatapoint(Datapoint dp)
 }
 
 
-bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<KeyValue> &tags, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
+bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
 {
 
     if (this->metricsMap.count(metric) == 0)
@@ -220,7 +213,7 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     values.push_back(KeyValue(this->metricsMap.at("max_value"), tempString.str().c_str()));
     tempString.str("");
 
-    this->addDatapoint(Datapoint(this->metricsMap.at(metric), tags, values));
+    this->addDatapoint(Datapoint(this->metricsMap.at(metric), values));
 
     valVect.clear();
     values.clear();
@@ -462,15 +455,17 @@ void InfluxDBClient::setPushInterval(int newPushInterval)
     this->pushInterval = newPushInterval;
     writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, this->pushInterval);
 
+    // TODO: call this->publishSensorConfig() instead.
+
     ostringstream configStr;
-    vector<KeyValue> configTags, configValues;
+    vector<KeyValue> configValues;
 
     configStr << newPushInterval;
 
     KeyValue kv = KeyValue(this->metricsMap.at("push_interval"), configStr.str().c_str());
     configValues.push_back(kv);
 
-    Datapoint dp = Datapoint(this->metricsMap.at("sensor_config"), configTags, configValues);
+    Datapoint dp = Datapoint(this->metricsMap.at("sensor_config"), configValues);
     this->addDatapoint(dp);
 
     EEPROM.commit();
@@ -871,6 +866,26 @@ void loadUint8IfExists(int address, uint8_t *value)
 
 }
 
+// TODO: Check why it is not parsed correctly.
+void InfluxDBClient::publishSensorConfig()
+{
+    vector<KeyValue> values;
+
+    values.push_back(KeyValue(this->metricsMap.at("influx_host"), this->influxHost));
+    values.push_back(KeyValue(this->metricsMap.at("influx_bucket"), this->influxBucket));
+    values.push_back(KeyValue(this->metricsMap.at("influx_org"), this->influxOrg));
+
+    std::ostringstream port;
+    port << this->influxPort;
+    values.push_back(KeyValue(this->metricsMap.at("influx_port"), port.str()));
+
+    std::ostringstream pushInterval;
+    pushInterval << this->pushInterval;
+    values.push_back(KeyValue(this->metricsMap.at("push_interval"), pushInterval.str()));
+
+    this->addDatapoint(Datapoint(this->metricsMap.at("sensor_config"), values));
+}
+
 void InfluxDBClient::loadSensorConfig()
 {
     loadStringIfExists(EEPROM_INFLUX_HOST_OFFSET, EEPROM_INFLUX_PORT_OFFSET, &this->influxHost);
@@ -885,6 +900,8 @@ void InfluxDBClient::loadSensorConfig()
     if (port >= 0) {
         this->influxPort = port;
     }
+
+     // TODO: call this->publishSensorConfig() here.
 }
 
 void InfluxDBClient::saveSensorConfig()
@@ -900,4 +917,6 @@ void InfluxDBClient::saveSensorConfig()
 
     EEPROM.commit();
     Serial.println("Saved config");
+
+    // TODO: call this->publishSensorConfig() here.
 }
