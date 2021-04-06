@@ -171,7 +171,6 @@ void InfluxDBClient::addDatapoint(Datapoint dp)
 
 bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<KeyValue> &values, std::ostringstream &tempString, float lowerThreshold, float upperThreshold)
 {
-
     if (this->metricsMap.count(metric) == 0)
     {
         this->addMetricName(metric);
@@ -215,12 +214,14 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     valVect.clear();
     values.clear();
 
-    // Most significant 8 bits (8-16) -> metric value
+    // Clear previous statusByte
 
-    for (size_t i = 8; i < 16; i++)
+    for (size_t i = 0; i < 16; i++)
     {
         this->statusByte &= ~(1u << i);
     }
+
+    // Metric value
 
     uint8_t metricBin = this->metricsMap.at(metric);
     this->statusByte = ((uint16_t)metricBin << 8) | this->statusByte;
@@ -229,23 +230,22 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     // Bit 4 -> if value is higher than the higherThreshold set up
     // Bit 5 -> if last metric values are OK
 
-    this->statusByte &= ~(1u << 3);
-    this->statusByte &= ~(1u << 4);
-    this->statusByte &= ~(1u << 5);
-
     if (minValue < lowerThreshold)
     {
         this->statusByte |= 1u << 3;        // <
+        setStatusByte(this->statusByte);
         return false;
     }
     if (maxValue > upperThreshold)
     {
         this->statusByte |= 1u << 4;        // >
+        setStatusByte(this->statusByte);
         return false;
     }
     if ((minValue >= lowerThreshold) && (maxValue <= upperThreshold))
     {
         this->statusByte |= 1u << 5;        // lastMetricOK to 1
+        setStatusByte(this->statusByte);
         return true;
     }
 
@@ -253,10 +253,11 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
 
 void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
 {
-
-    this->statusByte &= ~(1u << 0);
-    this->statusByte &= ~(1u << 1);
-    this->statusByte &= ~(1u << 2);
+    // Clear previous statusByte
+    for (size_t i = 0; i < 16; i++)
+    {
+        this->statusByte &= ~(1u << i);
+    }
 
     switch (this->monitoringStatus)
     {
@@ -367,7 +368,6 @@ enum monitoringStatus InfluxDBClient::getMonitoringStatus()
 
 void InfluxDBClient::tick()
 {
-
     Serial.println("Buffer:");
     for (int i = 0; i < this->metricsBuffer.size(); i++)
     {
@@ -419,11 +419,6 @@ uint16_t InfluxDBClient::getStatusByte()
 
 void InfluxDBClient::setStatusByte(uint16_t newStatusByte)
 {
-    Serial.print("New status byte: ");
-    Serial.println(newStatusByte);
-    Serial.print("The old one was: ");
-    Serial.println(this->statusByte);
-
     this->statusByte = newStatusByte;
     writeUint16ToDisk(EEPROM_STATUS_BYTE_ARRAY_OFFSET + (int) this->statusByteIdxPointer, this->statusByte);
 
@@ -433,8 +428,6 @@ void InfluxDBClient::setStatusByte(uint16_t newStatusByte)
     writeUint8ToDisk(EEPROM_STATUS_BYTE_ARRAY_INDEX_OFFSET, this->statusByteIdxPointer);
 
     EEPROM.commit();
-
-    Serial.println(this->statusByte);
 }
 
 uint8_t InfluxDBClient::getStatusByteIdxPointer()

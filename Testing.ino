@@ -19,8 +19,6 @@ using namespace std;
 
 #define DEFAULT_READS_PER_METRIC 16
 
-// const char* SSID = "NOWTVHSCFW";
-// const char* password = "R2jvpFLN89Iu";
 const char* SSID = "MOVISTAR_E9AD";
 const char* password = "2KsewRQcLuDsVQUr5Pvj";
 
@@ -49,7 +47,7 @@ void setup() {
   Serial.begin(9600);
 
   // WiFi connection
-  
+
   Serial.println("");
   Serial.println("Connecting to: ");
   Serial.println(SSID);
@@ -104,20 +102,20 @@ void loop() {
   std::ostringstream tempString;
 
   if (loopCount >= (readsPerMetric - 1)) {
-    
+
     bool tempOk = influxClient.createMetric("temperature", tempVect, tags, values, tempString, lowerTempThreshold, upperTempThreshold);
     bool humOk = influxClient.createMetric("humidity", humVect, tags, values, tempString, lowerHumThreshold, upperHumThreshold);
     bool barOk = influxClient.createMetric("barometric_pressure", barVect, tags, values, tempString, lowerBarThreshold, upperBarThreshold);
     bool difOk = influxClient.createMetric("differential_pressure", difVect, tags, values, tempString, lowerDifThreshold, upperDifThreshold);
 
     checkMonitoringLevels(tempOk && humOk && barOk && difOk, readsPerMetric);
-    
+
     loopCount = 0;
-    
+
   } else loopCount++;
 
   loopInterval = influxClient.getPushInterval() / readsPerMetric;
-  
+
   influxClient.tick();
   delay(loopInterval);
 
@@ -144,5 +142,5 @@ void printValues(float temp, float hum, float bar_p, float dif_p) {
   Serial.print("Pressure2 = ");
   Serial.print(dif_p);
   Serial.println(" bar");
-  
+
 }

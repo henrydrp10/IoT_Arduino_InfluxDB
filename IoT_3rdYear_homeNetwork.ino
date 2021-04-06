@@ -11,16 +11,14 @@
 #include <sstream>
 using namespace std;
 
-#define INFLUXDB_HOST "192.168.1.40"
+#define INFLUXDB_HOST "192.168.1.60"
 #define INFLUXDB_PORT 8086
-#define INFLUXDB_TOKEN "73ugAny7dK14n4q5jns9YmT_TM8g9GrSoXVWTF8WSeIA2rvCdC4OaB2giQKkUeb4bBgIXgeR1O8T6T64Pol2Ow=="
-#define INFLUXDB_ORG "uom"
+#define INFLUXDB_TOKEN "FEtP4M2cosTnZ2SCLmFgr8ELeW10R8qLWwl7B6kXOJuOUbYp6NUK3NCmVtglsBeg3M5pI6_cNwWzEnO-vnairQ=="
+#define INFLUXDB_ORG "iot"
 #define INFLUXDB_BUCKET "iot"
 
 #define DEFAULT_READS_PER_METRIC 16
 
-// const char* SSID = "NOWTVHSCFW";
-// const char* password = "R2jvpFLN89Iu";
 const char* SSID = "MOVISTAR_E9AD";
 const char* password = "2KsewRQcLuDsVQUr5Pvj";
 
@@ -77,14 +75,6 @@ void setup() {
   influxClient = InfluxDBClient(INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN, "testsensor");
   loopInterval = influxClient.getPushInterval() / readsPerMetric;
 
-  Serial.print("The statusByte -> ");
-  Serial.println(influxClient.getStatusByte());
-  Serial.print("The monitoringStatus -> ");
-  Serial.println(influxClient.getMonitoringStatus());
-  Serial.print("The statusByteIdxPointer -> ");
-  Serial.println(influxClient.getStatusByteIdxPointer());
-    
-
   influxClient.addMetricName("temperature");
   influxClient.addMetricName("humidity");
   influxClient.addMetricName("barometric_pressure");
@@ -122,22 +112,9 @@ void loop() {
     bool difOk = influxClient.createMetric("differential_pressure", difVect, values, tempString, lowerDifThreshold, upperDifThreshold);
 
     influxClient.checkMonitoringLevels(tempOk && humOk && barOk && difOk, readsPerMetric);
-
-    Serial.print("Status byte: ");
-    Serial.println(influxClient.getStatusByte());
-    Serial.print("Monitoring Status 3: ");
-    Serial.println(influxClient.getMonitoringStatus());
     
     loopCount = 0;
     loopInterval = influxClient.getPushInterval() / readsPerMetric;
-
-    Serial.print("The statusByte -> ");
-    Serial.println(influxClient.getStatusByte());
-    Serial.print("The monitoringStatus -> ");
-    Serial.println(influxClient.getMonitoringStatus());
-    Serial.print("The statusByteIdxPointer -> ");
-    Serial.println(influxClient.getStatusByteIdxPointer());
-    Serial.println("Next step: tick()");
     
   } else loopCount++;
   
@@ -164,7 +141,7 @@ void printValues(float temp, float hum, float bar_p, float dif_p) {
   Serial.print(bar_p);
   Serial.println(" hPa");
 
-  Serial.print("Diff Pressure2 = ");
+  Serial.print("Diff Pressure = ");
   Serial.print(dif_p);
   Serial.println(" bar");
   
