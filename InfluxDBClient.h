@@ -57,7 +57,6 @@ class Datapoint {
         Datapoint(uint8_t metric, vector<KeyValue> values);
         uint8_t getMetric();
         vector<KeyValue> getValues();
-        void addTag(KeyValue tag);
         void addValue(KeyValue value);
     private:
         uint8_t metric;

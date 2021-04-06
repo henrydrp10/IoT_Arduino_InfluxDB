@@ -161,9 +161,6 @@ void InfluxDBClient::addMetricName(string metric)
 
 void InfluxDBClient::addDatapoint(Datapoint dp)
 {
-    // dp.addTag(KeyValue(this->metricsMap.at("sensor_group"), this->sensorGroup));
-    // dp.addTag(KeyValue(this->metricsMap.at("sensor_address"), this->sensorAddress.toString().c_str()));
-
     if (metricsBuffer.size() >= this->bufferSize)
     {
         metricsBuffer.erase(metricsBuffer.begin());

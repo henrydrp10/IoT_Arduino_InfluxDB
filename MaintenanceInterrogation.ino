@@ -19,6 +19,7 @@ using namespace std;
 void setup() {
 
     Serial.begin(9600);
+    EEPROM.begin(EEPROM_SIZE);
 
     Serial.printf("%d\n", EEPROM.length());
 
