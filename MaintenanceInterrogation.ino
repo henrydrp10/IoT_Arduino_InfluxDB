@@ -38,14 +38,14 @@ void setup() {
     Serial.println("Last statusByte readings:");
     for (uint16_t statusByte : statusByteVector)
     {
-        Serial.println(toBinary(statusByte));
+        Serial.println(toBinary(statusByte).c_str());
     }
 
 
 }
 
 void loop() {
-  
+
 }
 
 int readIntFromDisk(int address)
