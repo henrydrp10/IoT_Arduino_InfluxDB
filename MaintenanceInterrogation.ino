@@ -38,14 +38,14 @@ void setup() {
     Serial.println("Last statusByte readings:");
     for (uint16_t statusByte : statusByteVector)
     {
-        Serial.println(statusByte);
+        Serial.println(toBinary(statusByte));
     }
 
 
 }
 
 void loop() {
-
+  
 }
 
 int readIntFromDisk(int address)
@@ -79,4 +79,17 @@ string readStringFromDisk(int address, int addressUpperBound)
     }
 
     return value.str();
+}
+
+// INT TO BINARY -------------------------------------------------------------------------------------
+
+string toBinary(int n)
+{
+    string r;
+    while(n != 0)
+    {
+      r = (n % 2 == 0 ? "0":"1") + r;
+      n /= 2;
+    }
+    return r;
 }

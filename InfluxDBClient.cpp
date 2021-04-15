@@ -210,8 +210,7 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     tempString.str("");
 
     this->addDatapoint(Datapoint(this->metricsMap.at(metric), values));
-
-    valVect.clear();
+    
     values.clear();
 
     // Clear previous statusByte
@@ -288,7 +287,7 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
             if (metricsOk)
             {
                 this->warningToAlert--;
-                if (this->warningToAlert < DEFAULT_OK_BOUND)
+                if (this->warningToAlert <= DEFAULT_OK_BOUND)
                 {
                     uint16_t newStatusByte = this->statusByte;
                     newStatusByte |= 1u << 0;
@@ -359,6 +358,14 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
 
             break;
     }
+
+    Serial.print("Reads per metric: ");
+    Serial.println(readsPerMetric);
+    Serial.print("Monitoring status: ");
+    Serial.println(this->monitoringStatus);
+    Serial.print("WarningToAlert: ");
+    Serial.println(this->warningToAlert);
+
 }
 
 enum monitoringStatus InfluxDBClient::getMonitoringStatus()
