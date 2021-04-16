@@ -1,7 +1,8 @@
 \documentclass{article}
+\usepackage[nottoc]{tocbibind}
 
 \title{Final Year Project: Bringing the Internet of Things to cleanroom instrumentation}
-\author{Henry David Rubiano Poveda}
+\author{Author: Henry David Rubiano Poveda}
 \date{\today}
 
 \begin{document}
@@ -10,12 +11,40 @@
 \newpage
 
 \tableofcontents
+\newpage
 
 \section{Introduction}
 \subsection{Objectives}
+
+The Internet of Things is rapidly changing how we interact with the world around us, providing us with new more efficient ways of approaching real world problems by integrating technology in many more different areas of society. It is clear that in this new era, data is becoming a very valuable asset for many organisations, as it allows them to have more control over the decisions they choose to take. It also helps them keep track of many different vital system parameters over time, which will certainly be helpful, as they will be able to learn about their product using the experience that this data will provide them. This is why the collection of real time data is becoming more and more important as technology advances and becomes a crucial part of our daily life.\newline 
+
+The main objective of this third year project is to bring the Internet of Things to the cleanroom instrumentation, by further designing and implementing an IoT system able to monitor parameters efficiently and effectively in a diverse range of instrumentation and equipment, while making decisions intelligently according to the different kinds of data collected from the environment. This project will consist on different stages that must be achieved in order to gain the necessary knowledge to develop a product that can be properly applied to a specialist real world application: We will first need to understand the IoT system architecture developed in a previous project, which will serve as the foundation for our monitoring system. We will then need to develop the functionality for this system, focusing on key aspects such as how the data is collected, how this data can be stored, and also how the data can be transferred through the network to the database. In order to make the system "smarter" we will need to focus on making the appropriate decisions in order to maintain the well-being of the system, which is the principal objective of parameter monitoring. We will also need to focus on enhancing data reporting and visualisation, in order to show the monitoring status of the different devices of the IoT network, and in data logging, important to store data locally (and therefore keeping the last pieces of information collected safe temporarily) for unexpected cases that could arise like loss of power or the impossibility of transferring the data through the network. 
+
 \subsection{The Internet of Things}
-\subsection{Cleanroom Instrumentation}
-\subsection{Covid-19 and its effects}
+
+According to the Oxford Dictionary, the Internet of Things (IoT) is “the interconnection via the Internet of computing devices embedded in everyday objects, enabling them to send and receive data”. 
+We should not confuse the Internet of Things with smart technology though, as this technology only refers to any device that is able to connect to the Internet. While we need to be present in order for a smart device (such as a smartphone) to use the technology and hence connect to the Internet, an IoT device could be accessed and controlled from anywhere at anytime \cite{french2016digital}.
+
+In order to talk about the Internet of Things, we must talk about the meaning of a "thing". The only requirement for a thing to be IoT-enabled is just to be able to connect to the Internet and communicate with others while being able to be accessed and controlled from anywhere and anytime, as mentioned before. This means that the personal and business possibilities of these "things" are almost endless. They could refer to anything from a connected medical device, a biochip transponder, to a solar panel, an "intelligent" car with sensors that alert the driver of many parameters to take into account (fuel, tire pressure, needed maintenance, and more) or any object, with sensors embedded in it, that has the ability to collect and transfer data over a network \cite{aeris}. These "things" exist in the physical world, but we can also have virtual "things", which exist in the information world and may or may not be associated with a physical "thing". 
+
+\paragraph*{History\newline\newline}
+
+The term "IoT", used for the first time by Kevin Ashton in his presentation at Procter and Gamble (P\&G) in 1999 when trying to link a new idea by P\&G's supply chain to the new and upcoming topic of "the Internet" was only the beginning of a whole new field that would keep expanding more and more rapidly every year, appearing everywhere from the Scientific American journal to a conference in Europe \cite{ashton}. The announcement by LG of a smart fridge that would detect if products are or not full in 2000 was one of the first efforts by companies to have this kind of technology integrated, but it would be almost a decade later, in 2008, when the ISPO (Internet Protocol for Smart Objects) alliance started promoting the use of IP addresses in IoT communications, developing standards and promoting its use all over the world. Since then, the growth of the interest in the field has been nothing short of unprecedented \cite{suresh}.
+
+This field of computer science has been growing at a really high rate the last few years, as the year 2020 was the first where there were more IoT connections (smart homes, cars, industrial equipment...) than non-IoT connections (smartphones, laptops and computers), and Cisco predicts that there will be 500 billion devices connected to the Internet by 2030. Despite Covid -19, almost 50\% of organisations are planning to increase their investments in IoT \cite{gartner:covid}, and it is predicted that its market value will reach around USD 81 billion by 2026 \cite{mordor}.   
+
+\paragraph*{Architecture\newline\newline}
+
+The IoT system architecture is usually described as a four part process, in which data is collected from endpoints (all kinds of sensors) and after some pre-processing they finally arrive at a data center where it is properly processed, analysed, and stored. We must also take into account that data or instructions can flow in the opposite direction (from the data center to the endpoints) in order to make decisions about actions to take, usually according to the data previously received. Now we will go through each stage, which will also be taken into account when developing this project \cite{digi}\cite{marlabs}:
+
+\begin{itemize}
+    \item The first part would consist of the sensors and the actuators. Those will be in charge of collecting the data from whichever object they might be embeeded in, with parameters such as chemical composition, temperature, humidity or more. The actuators will be the ones able to decide and take actions based on the information previously collected by the sensors, like opening or closing the curtains of a room, depending on if the sun is pointing right at the window. 
+    \item The second part consists of the Sensor Data Acquisition Systems. These systems will be able to perform tasks such as converting the data into the right format or compressing it to reduce its size.
+    \item The third stage would be the pre-processing of the data at the endpoint side. Tools can be used for this stage, like machine learning or some kind of intelligence system able to make some quick decisions without having to wait for the data center to give the instructions. We want to always make sure that the intelligence is close to the endpoints, instead of close to the data center. 
+    \item The last part of the architecture will be focused on the analysis, visualisation and storage of the data collected. This will be performed by the data center, which can be in a physical location, or in the cloud. The analysis of the data center will be much deeper than the one in the pre-processing part, as business rules and specific analysis will be taken place there.
+\end{itemize}
+
+\paragraph*{Applications\newline\newline}
 
 \section{Hardware components}
 
@@ -23,9 +52,8 @@ The decision of the microcontroller board and the sensors will be crucial for th
 At the moment, there have been sketches for the use of an Arduino compatible microcontroller board (ESP32) and a DHT22 temperature and humidity sensor. We will consider those choices plus others in the comparison.
 
 \subsection{Microcontroller}
+\paragraph*{ESP32\newline}
 
-
-\paragraph*{ESP32}
 \subsection{Sensors}
 
 \section{Data collection}
@@ -34,5 +62,8 @@ At the moment, there have been sketches for the use of an Arduino compatible mic
 
 \section{Data transfer}
 
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{research}
 
 \end{document}
