@@ -8,6 +8,7 @@
 #include <Adafruit_BME280.h>
 #include "FS.h"
 #include "SD.h"
+#include <time.h>
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
@@ -80,12 +81,22 @@ void setup() {
   }
 
   File logFile = SD.open("/log.txt", FILE_APPEND);
-  logFile.println("Starting data logging: ");
-  logFile.println();
+  logFile.print("Starting data logging at: ");
   logFile.close();
 
+  configTime(3600, 1, "time.nist.gov", "0.pool.ntp.org", "1.pool.ntp.org");
+  struct tm tmstruct ;
+  tmstruct.tm_year = 0;
+  getLocalTime(&tmstruct, 5000);
+
+  std::ostringstream timeNow;
+  timeNow << tmstruct.tm_mday << "/" << tmstruct.tm_mon + 1 << "/" << tmstruct.tm_year + 1900 << ", " << tmstruct.tm_hour << ":" << tmstruct.tm_min << ":" << tmstruct.tm_sec;
+  log_time(timeNow.str());
+
   influxClient = InfluxDBClient(INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN, "testsensor");
-  loopInterval = influxClient.getPushInterval() / readsPerMetric;
+  loopInterval = influxClient.getPushInterval() / DEFAULT_READS_PER_METRIC;
+
+  float storageMB = SD.usedBytes() / (1024 * 1024);
 
   std::ostringstream mbUsed;
   mbUsed << "Storage used: " << storageMB << "MB";
@@ -129,6 +140,15 @@ void loop() {
   std::ostringstream tempString;
 
   if (loopCount >= (readsPerMetric - 1)) {
+
+    configTime(3600, 1, "time.nist.gov", "0.pool.ntp.org", "1.pool.ntp.org");
+    struct tm tmstruct;
+    tmstruct.tm_year = 0;
+    getLocalTime(&tmstruct, 5000);
+
+    std::ostringstream timeNow;
+    timeNow << tmstruct.tm_mday << "/" << tmstruct.tm_mon + 1 << "/" << tmstruct.tm_year + 1900 << ", " << tmstruct.tm_hour << ":" << tmstruct.tm_min << ":" << tmstruct.tm_sec;
+    log_time(timeNow.str());
 
     bool tempOk = influxClient.createMetric("temperature", tempVect, values, tempString, lowerTempThreshold, upperTempThreshold);
     log_data("temperature", tempVect);
@@ -214,6 +234,14 @@ void u8g2_prepare(void) {
 }
 
 // LOG METHODS TO SD ---------------------------------------------------------------------------------
+
+void log_time(string timeNow)
+{
+  File logFile = SD.open("/log.txt", FILE_APPEND);
+  logFile.println(timeNow.c_str());
+  logFile.println();
+  logFile.close();
+}
 
 void log_data(string metric, vector<float> values)
 {
