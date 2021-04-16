@@ -210,7 +210,7 @@ bool InfluxDBClient::createMetric(string metric, vector<float> &valVect, vector<
     tempString.str("");
 
     this->addDatapoint(Datapoint(this->metricsMap.at(metric), values));
-    
+
     values.clear();
 
     // Clear previous statusByte
@@ -365,7 +365,7 @@ void InfluxDBClient::checkMonitoringLevels(bool metricsOk, int &readsPerMetric)
     Serial.println(this->monitoringStatus);
     Serial.print("WarningToAlert: ");
     Serial.println(this->warningToAlert);
-
+    Serial.println();
 }
 
 enum monitoringStatus InfluxDBClient::getMonitoringStatus()
@@ -451,8 +451,6 @@ void InfluxDBClient::setPushInterval(int newPushInterval)
 {
     this->pushInterval = newPushInterval;
     writeIntToDisk(EEPROM_PUSH_INTERVAL_OFFSET, this->pushInterval);
-
-    // TODO: call this->publishSensorConfig() instead.
 
     ostringstream configStr;
     vector<KeyValue> configValues;
@@ -863,26 +861,6 @@ void loadUint8IfExists(int address, uint8_t *value)
 
 }
 
-// TODO: Check why it is not parsed correctly.
-void InfluxDBClient::publishSensorConfig()
-{
-    vector<KeyValue> values;
-
-    values.push_back(KeyValue(this->metricsMap.at("influx_host"), this->influxHost));
-    values.push_back(KeyValue(this->metricsMap.at("influx_bucket"), this->influxBucket));
-    values.push_back(KeyValue(this->metricsMap.at("influx_org"), this->influxOrg));
-
-    std::ostringstream port;
-    port << this->influxPort;
-    values.push_back(KeyValue(this->metricsMap.at("influx_port"), port.str()));
-
-    std::ostringstream pushInterval;
-    pushInterval << this->pushInterval;
-    values.push_back(KeyValue(this->metricsMap.at("push_interval"), pushInterval.str()));
-
-    this->addDatapoint(Datapoint(this->metricsMap.at("sensor_config"), values));
-}
-
 void InfluxDBClient::loadSensorConfig()
 {
     loadStringIfExists(EEPROM_INFLUX_HOST_OFFSET, EEPROM_INFLUX_PORT_OFFSET, &this->influxHost);
@@ -897,8 +875,6 @@ void InfluxDBClient::loadSensorConfig()
     if (port >= 0) {
         this->influxPort = port;
     }
-
-     // TODO: call this->publishSensorConfig() here.
 }
 
 void InfluxDBClient::saveSensorConfig()
@@ -914,6 +890,4 @@ void InfluxDBClient::saveSensorConfig()
 
     EEPROM.commit();
     Serial.println("Saved config");
-
-    // TODO: call this->publishSensorConfig() here.
 }
