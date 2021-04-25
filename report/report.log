@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.4.10)  15 APR 2021 09:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.4.10)  25 APR 2021 18:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
 \c@part=\count167
 \c@section=\count168
@@ -23,104 +23,505 @@ File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
 )
-(/usr/share/texlive/texmf-dist/tex/latex/tocbibind/tocbibind.sty
-Package: tocbibind 2010/10/13 v1.5k extra ToC listings
-Package tocbibind Info: The document has section divisions on input line 50.
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
 
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
-Package tocbibind Note: Using section or other style headings.
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2019/11/07 v1.0c TeX engine tests
+))
+\Gm@cnth=\count175
+\Gm@cntv=\count176
+\c@Gm@tempcnt=\count177
+\Gm@bindingoffset=\dimen135
+\Gm@wd@mp=\dimen136
+\Gm@odd@mp=\dimen137
+\Gm@even@mp=\dimen138
+\Gm@layoutwidth=\dimen139
+\Gm@layoutheight=\dimen140
+\Gm@layouthoffset=\dimen141
+\Gm@layoutvoffset=\dimen142
+\Gm@dimlist=\toks15
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+)
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2020/02/14 3.40 The Babel package
 
-) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+(/usr/share/texlive/texmf-dist/tex/generic/babel/switch.def
+File: switch.def 2020/02/14 3.40 Babel switching mechanism
+)
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/british.ldf
+Language: british 2017/06/06 v3.3r English support from the babel system
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2020/02/14 3.40 Babel common definitions
+\babel@savecnt=\count178
+\U@D=\dimen143
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count179
+)
+Package babel Info: \l@british = using hyphenrules for english
+(babel)             (\language0) on input line 82.
+Package babel Info: \l@UKenglish = using hyphenrules for english
+(babel)             (\language0) on input line 83.
+Package babel Info: \l@canadian = using hyphenrules for english
+(babel)             (\language0) on input line 102.
+Package babel Info: \l@australian = using hyphenrules for english
+(babel)             (\language0) on input line 105.
+Package babel Info: \l@newzealand = using hyphenrules for english
+(babel)             (\language0) on input line 108.
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2019-12-06 v5.2j context-sensitive quotations (JAW)
+
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count180
+)
+\csq@reset=\count181
+\csq@gtype=\count182
+\csq@glevel=\count183
+\csq@qlevel=\count184
+\csq@maxlvl=\count185
+\csq@tshold=\count186
+\csq@ltx@everypar=\toks18
+
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2019-12-06 v5.2j csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+))
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count187
+\lst@gtempboxa=\box45
+\lst@token=\toks19
+\lst@length=\count188
+\lst@currlwidth=\dimen144
+\lst@column=\count189
+\lst@pos=\count190
+\lst@lostspace=\dimen145
+\lst@width=\dimen146
+\lst@newlines=\count191
+\lst@lineno=\count192
+\lst@maxwidth=\dimen147
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
+\c@lstnumber=\count193
+\lst@skipnumbers=\count194
+\lst@framebox=\box46
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2019/09/10 1.8c listings configuration
+))
+Package: listings 2019/09/10 1.8c (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2019/12/01 v3.14 programmable bibliographies (PK/MW)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/logreq/logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count195
+
+(/usr/share/texlive/texmf-dist/tex/latex/logreq/logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+\c@tabx@nest=\count196
+\c@listtotal=\count197
+\c@listcount=\count198
+\c@liststart=\count199
+\c@liststop=\count266
+\c@citecount=\count267
+\c@citetotal=\count268
+\c@multicitecount=\count269
+\c@multicitetotal=\count270
+\c@instcount=\count271
+\c@maxnames=\count272
+\c@minnames=\count273
+\c@maxitems=\count274
+\c@minitems=\count275
+\c@citecounter=\count276
+\c@maxcitecounter=\count277
+\c@savedcitecounter=\count278
+\c@uniquelist=\count279
+\c@uniquename=\count280
+\c@refsection=\count281
+\c@refsegment=\count282
+\c@maxextratitle=\count283
+\c@maxextratitleyear=\count284
+\c@maxextraname=\count285
+\c@maxextradate=\count286
+\c@maxextraalpha=\count287
+\c@abbrvpenalty=\count288
+\c@highnamepenalty=\count289
+\c@lownamepenalty=\count290
+\c@maxparens=\count291
+\c@parenlevel=\count292
+\blx@tempcnta=\count293
+\blx@tempcntb=\count294
+\blx@tempcntc=\count295
+\blx@maxsection=\count296
+\blx@maxsegment@0=\count297
+\blx@notetype=\count298
+\blx@parenlevel@text=\count299
+\blx@parenlevel@foot=\count300
+\blx@sectionciteorder@0=\count301
+\blx@entrysetcounter=\count302
+\labelnumberwidth=\skip49
+\labelalphawidth=\skip50
+\biblabelsep=\skip51
+\bibitemsep=\skip52
+\bibnamesep=\skip53
+\bibinitsep=\skip54
+\bibparsep=\skip55
+\bibhang=\skip56
+\blx@bcfin=\read3
+\blx@bcfout=\write3
+\blx@langwohyphens=\language3
+\c@mincomprange=\count303
+\c@maxcomprange=\count304
+\c@mincompwidth=\count305
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/blx-dm.def
+File: blx-dm.def 2019/12/01 v3.14 biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex style data model...
+Package biblatex Info: ... file 'ieee.dbx' not found.
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count306
+\c@savedafterword=\count307
+\c@annotator=\count308
+\c@savedannotator=\count309
+\c@author=\count310
+\c@savedauthor=\count311
+\c@bookauthor=\count312
+\c@savedbookauthor=\count313
+\c@commentator=\count314
+\c@savedcommentator=\count315
+\c@editor=\count316
+\c@savededitor=\count317
+\c@editora=\count318
+\c@savededitora=\count319
+\c@editorb=\count320
+\c@savededitorb=\count321
+\c@editorc=\count322
+\c@savededitorc=\count323
+\c@foreword=\count324
+\c@savedforeword=\count325
+\c@holder=\count326
+\c@savedholder=\count327
+\c@introduction=\count328
+\c@savedintroduction=\count329
+\c@namea=\count330
+\c@savednamea=\count331
+\c@nameb=\count332
+\c@savednameb=\count333
+\c@namec=\count334
+\c@savednamec=\count335
+\c@translator=\count336
+\c@savedtranslator=\count337
+\c@shortauthor=\count338
+\c@savedshortauthor=\count339
+\c@shorteditor=\count340
+\c@savedshorteditor=\count341
+\c@labelname=\count342
+\c@savedlabelname=\count343
+\c@institution=\count344
+\c@savedinstitution=\count345
+\c@lista=\count346
+\c@savedlista=\count347
+\c@listb=\count348
+\c@savedlistb=\count349
+\c@listc=\count350
+\c@savedlistc=\count351
+\c@listd=\count352
+\c@savedlistd=\count353
+\c@liste=\count354
+\c@savedliste=\count355
+\c@listf=\count356
+\c@savedlistf=\count357
+\c@location=\count358
+\c@savedlocation=\count359
+\c@organization=\count360
+\c@savedorganization=\count361
+\c@origlocation=\count362
+\c@savedoriglocation=\count363
+\c@origpublisher=\count364
+\c@savedorigpublisher=\count365
+\c@publisher=\count366
+\c@savedpublisher=\count367
+\c@language=\count368
+\c@savedlanguage=\count369
+\c@origlanguage=\count370
+\c@savedoriglanguage=\count371
+\c@pageref=\count372
+\c@savedpageref=\count373
+\shorthandwidth=\skip57
+\shortjournalwidth=\skip58
+\shortserieswidth=\skip59
+\shorttitlewidth=\skip60
+\shortauthorwidth=\skip61
+\shorteditorwidth=\skip62
+\locallabelnumberwidth=\skip63
+\locallabelalphawidth=\skip64
+\localshorthandwidth=\skip65
+\localshortjournalwidth=\skip66
+\localshortserieswidth=\skip67
+\localshorttitlewidth=\skip68
+\localshortauthorwidth=\skip69
+\localshorteditorwidth=\skip70
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2019/12/01 v3.14 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2019/12/01 v3.14 biblatex compatibility (PK/MW)
+\c@textcitecount=\count374
+\c@textcitetotal=\count375
+\c@textcitemaxnames=\count376
+\c@biburlbigbreakpenalty=\count377
+\c@biburlbreakpenalty=\count378
+\c@biburlnumpenalty=\count379
+\c@biburlucpenalty=\count380
+\c@biburllcpenalty=\count381
+\biburlbigskip=\muskip17
+\biburlnumskip=\muskip18
+\biburlucskip=\muskip19
+\biburllcskip=\muskip20
+\c@smartand=\count382
+)
+Package biblatex Info: Trying to load bibliography style 'ieee'...
+Package biblatex Info: ... file 'ieee.bbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex-ieee/ieee.bbx
+File: ieee.bbx 2019/06/19 v1.3a biblatex bibliography style
+Package biblatex Info: Trying to load bibliography style 'numeric-comp'...
+Package biblatex Info: ... file 'numeric-comp.bbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/numeric-comp.bbx
+File: numeric-comp.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+File: numeric.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count383
+\c@bbx:relatedtotal=\count384
+))))
+Package biblatex Info: Trying to load citation style 'numeric'...
+Package biblatex Info: ... file 'numeric.cbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+File: numeric.cbx 2019/12/01 v3.14 biblatex citation style (PK/MW)
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.cfg
+File: biblatex.cfg 
+))
+(/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2020-01-22 v2.0d non-zero parskip adjustments
+)
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'british'.
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count175
-\l__pdf_internal_box=\box45
+\l__kernel_color_stack_int=\count385
+\l__pdf_internal_box=\box47
 )
 (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count386
+Package biblatex Info: Trying to load language 'british'...
+Package biblatex Info: ... file 'british.lbx' found.
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/british.lbx
+File: british.lbx 2019/12/01 v3.14 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2019/12/01 v3.14 biblatex localization (PK/MW)
+))
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+\openout3 = `report.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'report.bbl' found.
+
+(./report.bbl)
+Package biblatex Info: Reference section=0 on input line 18.
+Package biblatex Info: Reference segment=0 on input line 18.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 10.
+(Font)              <14.4> on input line 20.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 10.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 10.
+(Font)              <7> on input line 20.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(./report.toc
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+[3] (./report.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 2.
+(Font)              <12> on input line 6.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 2.
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
 )
-\tf@toc=\write3
-\openout3 = `report.toc'.
+\tf@toc=\write4
+\openout4 = `report.toc'.
 
- [2]
-Underfull \hbox (badness 10000) in paragraph at lines 19--20
+ [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15]
+[16] [17] [18] [19] [20] (./report.aux)
+Package logreq Info: Writing requests to 'report.run.xml'.
+\openout1 = `report.run.xml'.
 
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 32--33
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 49--49
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--49
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 57--57
-
- []
-
-[5] [6] (./report.bbl) [7] (./report.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 504 strings out of 483183
- 7968 string characters out of 5966292
- 236602 words of memory out of 5000000
- 15579 multiletter control sequences out of 15000+600000
- 537274 words of font info for 40 fonts, out of 8000000 for 9000
+ 10914 strings out of 483183
+ 195235 string characters out of 5966292
+ 857335 words of memory out of 5000000
+ 25849 multiletter control sequences out of 15000+600000
+ 539268 words of font info for 47 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 25i,6n,21p,1605b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/henry/.texlive2019/texmf-var
-/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
-.pfb>
-Output written on report.pdf (7 pages, 105894 bytes).
+ 40i,6n,45p,1423b,2199s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/henry/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
+pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmtt12.pfb>
+Output written on report.pdf (20 pages, 159859 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 106 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

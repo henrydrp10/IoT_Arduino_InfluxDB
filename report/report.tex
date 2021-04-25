@@ -1,8 +1,18 @@
-\documentclass{article}
-\usepackage[nottoc]{tocbibind}
+\documentclass[12pt]{article}
 
-\title{Final Year Project: Bringing the Internet of Things to cleanroom instrumentation}
-\author{Author: Henry David Rubiano Poveda}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{csquotes}
+\usepackage{listings}
+\usepackage[style=ieee,citestyle=numeric]{biblatex}
+\usepackage{parskip}
+
+\addbibresource{research.bib}
+\setlength{\parskip}{1em}
+
+\title{Exploring real time data collection and parameter monitoring in an Internet of Things system}
+\author{Author: Henry David Rubiano Poveda \and Supervisor: Prof. Thomas Thomson}
 \date{\today}
 
 \begin{document}
@@ -10,30 +20,52 @@
 \maketitle
 \newpage
 
+\begin{abstract}
+    The Internet of Things has grown at an exponential rate over the past few years. The technological progress in the field has allowed us to integrate even further the Internet into almost every single area of society. Thanks to IoT we can now connect ``things'' to the Internet by embedding small devices, which can collect data, communicate between each other or even make decisions without almost any kind of human intervention. This IoT project explores data collection and monitoring by further developing and implementing a system able to collect data from a variety of sensors and send it to a database to store it over time. The project will go through different stages in which different areas will be explored and different solutions will be developed. First, the project will explore the range of hardware components to be used, along with the different software and database system. Then, it will emphasise on the importance of storage optimisation on devices with limited resources, following with the implementation of an intelligence system able to monitor the data and make decisions accordingly, in order to preserve the well-being of the system. The project will finish with the implementation of different logging systems to add an extra layer of reliability in terms of information storage. 
+
+\end{abstract}
+\newpage
+
+\renewcommand{\abstractname}{Acknowledgements}
+\begin{abstract}
+    \setlength{\parskip}{1em}
+
+    First, I would like to thank my supervisor Professor Thomas Thomson. His valuable help and support have been very important for me, and it was with his orientation and assistance that I was able to successfully develop this project. \par
+
+    I would also like to thank my family and friends, who have helped me during these last 3 years and keep supporting me along the way. Thanks to them I have been able to get to this point, and I am forever grateful for their support.
+
+\end{abstract}
+\newpage
+
 \tableofcontents
 \newpage
 
 \section{Introduction}
-\subsection{Objectives}
 
-The Internet of Things is rapidly changing how we interact with the world around us, providing us with new more efficient ways of approaching real world problems by integrating technology in many more different areas of society. It is clear that in this new era, data is becoming a very valuable asset for many organisations, as it allows them to have more control over the decisions they choose to take. It also helps them keep track of many different vital system parameters over time, which will certainly be helpful, as they will be able to learn about their product using the experience that this data will provide them. This is why the collection of real time data is becoming more and more important as technology advances and becomes a crucial part of our daily life.\newline 
+\subsection{Aims and Objectives}
 
-The main objective of this third year project is to bring the Internet of Things to the cleanroom instrumentation, by further designing and implementing an IoT system able to monitor parameters efficiently and effectively in a diverse range of instrumentation and equipment, while making decisions intelligently according to the different kinds of data collected from the environment. This project will consist on different stages that must be achieved in order to gain the necessary knowledge to develop a product that can be properly applied to a specialist real world application: We will first need to understand the IoT system architecture developed in a previous project, which will serve as the foundation for our monitoring system. We will then need to develop the functionality for this system, focusing on key aspects such as how the data is collected, how this data can be stored, and also how the data can be transferred through the network to the database. In order to make the system "smarter" we will need to focus on making the appropriate decisions in order to maintain the well-being of the system, which is the principal objective of parameter monitoring. We will also need to focus on enhancing data reporting and visualisation, in order to show the monitoring status of the different devices of the IoT network, and in data logging, important to store data locally (and therefore keeping the last pieces of information collected safe temporarily) for unexpected cases that could arise like loss of power or the impossibility of transferring the data through the network. 
+The Internet of Things is rapidly changing how we interact with the world around us, providing us with new more efficient ways of approaching real world problems by integrating technology in many more different areas of society. It is clear that in this new era, data is becoming a very valuable asset for many organisations, as it allows them to have more control over the decisions they choose to take. It also helps them keep track of many different vital system parameters over time, which will certainly be helpful, as they will be able to learn about their product using the experience that this data will provide them. This is why the collection of real time data is becoming more and more important as technology advances and becomes a crucial part of our daily life.\par 
 
+The main objective of this third year project is to explore the collection, pre-processing and transfer of real time data in an Internet of Things system, by further designing and implementing a system able to monitor parameters efficiently and effectively in a diverse range of instrumentation and equipment, while making decisions intelligently according to the different kinds of data collected from the environment. 
+
+\subsection{Structure} 
+
+\section{Background}
 \subsection{The Internet of Things}
 
-According to the Oxford Dictionary, the Internet of Things (IoT) is “the interconnection via the Internet of computing devices embedded in everyday objects, enabling them to send and receive data”. 
-We should not confuse the Internet of Things with smart technology though, as this technology only refers to any device that is able to connect to the Internet. While we need to be present in order for a smart device (such as a smartphone) to use the technology and hence connect to the Internet, an IoT device could be accessed and controlled from anywhere at anytime \cite{french2016digital}.
+\subsubsection{Definition}
 
-In order to talk about the Internet of Things, we must talk about the meaning of a "thing". The only requirement for a thing to be IoT-enabled is just to be able to connect to the Internet and communicate with others while being able to be accessed and controlled from anywhere and anytime, as mentioned before. This means that the personal and business possibilities of these "things" are almost endless. They could refer to anything from a connected medical device, a biochip transponder, to a solar panel, an "intelligent" car with sensors that alert the driver of many parameters to take into account (fuel, tire pressure, needed maintenance, and more) or any object, with sensors embedded in it, that has the ability to collect and transfer data over a network \cite{aeris}. These "things" exist in the physical world, but we can also have virtual "things", which exist in the information world and may or may not be associated with a physical "thing". 
+According to the Oxford Dictionary, the Internet of Things (IoT) is “the interconnection via the Internet of computing devices embedded in everyday objects, enabling them to send and receive data”.  We should not confuse the Internet of Things with smart technology though, as this technology only refers to any device that is able to connect to the Internet. While we need to be present in order for a smart device (such as a smartphone) to use the technology and hence connect to the Internet, an IoT device could be accessed and controlled from anywhere at anytime \cite{french2016digital}.\par
 
-\paragraph*{History\newline\newline}
+In order to talk about the Internet of Things, we must talk about the meaning of a ``thing''. The only requirement for a thing to be IoT-enabled is just to be able to connect to the Internet and communicate with others while being able to be accessed and controlled from anywhere and anytime, as mentioned before. This means that the personal and business possibilities of these ``things'' are almost endless. They could refer to anything from a connected medical device, a biochip transponder, to a solar panel, an ``intelligent'' car with sensors that alert the driver of many parameters to take into account (fuel, tire pressure, needed maintenance, and more) or any object, with sensors embedded in it, that has the ability to collect and transfer data over a network \cite{aeris}. These ``things'' exist in the physical world, but we can also have virtual ``things'', which exist in the information world and may or may not be associated with a physical ``thing''. 
 
-The term "IoT", used for the first time by Kevin Ashton in his presentation at Procter and Gamble (P\&G) in 1999 when trying to link a new idea by P\&G's supply chain to the new and upcoming topic of "the Internet" was only the beginning of a whole new field that would keep expanding more and more rapidly every year, appearing everywhere from the Scientific American journal to a conference in Europe \cite{ashton}. The announcement by LG of a smart fridge that would detect if products are or not full in 2000 was one of the first efforts by companies to have this kind of technology integrated, but it would be almost a decade later, in 2008, when the ISPO (Internet Protocol for Smart Objects) alliance started promoting the use of IP addresses in IoT communications, developing standards and promoting its use all over the world. Since then, the growth of the interest in the field has been nothing short of unprecedented \cite{suresh}.
+\subsubsection{History}
+
+The term ``IoT'', used for the first time by Kevin Ashton in his presentation at Procter and Gamble (P\&G) in 1999 when trying to link a new idea by P\&G's supply chain to the new and upcoming topic of ``the Internet'' was only the beginning of a whole new field that would keep expanding more and more rapidly every year, appearing everywhere from the Scientific American journal to a conference in Europe \cite{ashton}. The announcement by LG of a smart fridge that would detect if products are or not full in 2000 was one of the first efforts by companies to have this kind of technology integrated, but it would be almost a decade later, in 2008, when the ISPO (Internet Protocol for Smart Objects) alliance started promoting the use of IP addresses in IoT communications, developing standards and promoting its use all over the world. Since then, the growth of the interest in the field has been nothing short of unprecedented \cite{suresh}.\par
 
 This field of computer science has been growing at a really high rate the last few years, as the year 2020 was the first where there were more IoT connections (smart homes, cars, industrial equipment...) than non-IoT connections (smartphones, laptops and computers), and Cisco predicts that there will be 500 billion devices connected to the Internet by 2030. Despite Covid -19, almost 50\% of organisations are planning to increase their investments in IoT \cite{gartner:covid}, and it is predicted that its market value will reach around USD 81 billion by 2026 \cite{mordor}.   
 
-\paragraph*{Architecture\newline\newline}
+\subsubsection{Architecture}
 
 The IoT system architecture is usually described as a four part process, in which data is collected from endpoints (all kinds of sensors) and after some pre-processing they finally arrive at a data center where it is properly processed, analysed, and stored. We must also take into account that data or instructions can flow in the opposite direction (from the data center to the endpoints) in order to make decisions about actions to take, usually according to the data previously received. Now we will go through each stage, which will also be taken into account when developing this project \cite{digi}\cite{marlabs}:
 
@@ -44,26 +76,184 @@ The IoT system architecture is usually described as a four part process, in whic
     \item The last part of the architecture will be focused on the analysis, visualisation and storage of the data collected. This will be performed by the data center, which can be in a physical location, or in the cloud. The analysis of the data center will be much deeper than the one in the pre-processing part, as business rules and specific analysis will be taken place there.
 \end{itemize}
 
-\paragraph*{Applications\newline\newline}
+\subsubsection{Applications}
 
-\section{Hardware components}
+Internet of Things' systems have proven to be able to be very important tools within a very wide range of areas in society, going from consumer to industrial and infrastructure applications:
 
-The decision of the microcontroller board and the sensors will be crucial for the best possible and most efficient system. Therefore, we need to be able to define which of them are the most adequate for this project.\newline
-At the moment, there have been sketches for the use of an Arduino compatible microcontroller board (ESP32) and a DHT22 temperature and humidity sensor. We will consider those choices plus others in the comparison.
+\begin{itemize}
+    \item Some of the consumer applications of IoT include everything from home automation systems that monitor lights, temperature, home appliances and even home security to self-driving cars or wearable technology such as fitness trackers that are able to monitor your health just by wearing them, etc.
+    \item Industrial applications of IoT have been very beneficial for most of the economic sectors; for example, primary sector activities such as agriculture are being automated and made more efficient, with systems which collect data from the environment (which is similar to what this project is about) and decide on which techniques are more appropriate for the land. The supply chain industry has also been revolutionised, as now it's a lot easier to figure out where the goods are at any point in time, hence being able to make accurate timelines, making the traffic a lot smoother and more efficient \cite{blume}. 
+    \item When we want to talk about large-scale infrastructure applications of IoT we must mention the new Smart Cities, with useful integrations of IoT ranging from more efficient public transformation systems (with real-time information on times and routes and an easier ticket purchasing system) to an automated and smart healthcare system (with an IoT system facilitating data collection and thus improving its administration) \cite{chathuranga}.
+\end{itemize}
 
-\subsection{Microcontroller}
-\paragraph*{ESP32\newline}
+\section{Design and Approach}
 
-\subsection{Sensors}
+\subsection{Project Structure and Requirements}
 
-\section{Data collection}
+This project will consist on different stages that must be achieved in order to gain the necessary knowledge to develop a product that can be properly applied to a specialist real world application: 
+\begin{itemize}
+    \item We will first need to understand the IoT system architecture developed in a previous project, which will serve as the foundation for our monitoring system.
+    \item We will then need to develop the functionality for this system, focusing on key aspects such as how the data is collected, how this data can be stored, and also how the data can be transferred through the network to the database.
+    \item In order to make the system ``smarter'' we will need to focus on making the appropriate decisions in order to maintain the well-being of the system, which is the principal objective of parameter monitoring.
+    \item We will also need to focus on enhancing data reporting and visualisation, in order to show the monitoring status of the different devices of the IoT network, and in data logging, important to store data locally (and therefore keeping the last pieces of information collected safe temporarily) for unexpected cases that could arise like loss of power or the impossibility of transferring the data through the network.
+\end{itemize}   
 
-\section{Data reduction}
+\subsection{System Architecture}
 
-\section{Data transfer}
+\subsubsection{Hardware components selection}
+
+The decision of the microcontroller board and the other hardware components will be crucial for the best possible and most efficient system. Therefore, we need to be able to define which of them are the most adequate for this project.\par
+
+In the previous project, there were sketches for the use of an Arduino compatible microcontroller board (ESP32) and a DHT22 temperature and humidity sensor. We will consider those choices plus others in the comparison.\par
+
+Choosing the right hardware components for an IoT system is a very important decision to make, as we want to make sure that the different components will be the most useful for our specific needs and that the system will run as efficiently as possible. We must take many factors into consideration, such as scalability, functionality, cost, power requirements, etc \cite{digiteum}.
+
+\subsubsection{Storing Time-Series Data: InfluxDB}
+
+We call Time Series Data to ``the collection of data through repeated measurements over time''. This means that we will get a sequence of data points that will be organised by the time they were measured at. The purpose of the collection of this type of data is mainly to monitor certain parameters closely and easily detect any change that may occur \cite{influx:time-series}.\par
+
+In this project we will be storing time series data in the form of temperature, humidity, barometric pressure and differential pressure readings. Because of this we have to choose the most appropriate database for this purpose. The database selected for this project was InfluxDB, a time series database designed for fast and high availability storage and retrieval of time series data. Time series data is stored by InfluxDB in a way that each field contains a series of blocks of time which are stored contiguously on disk, therefore being very optimised for fast operations on the data. Apart from that, InfluxDB uses a Line Protocol when sending time series data, which easily provides the query with the measurement, tags, fields and timestamp for very fast lookups \cite{influx:time-series}. It also offers clear advantages in speed when storing and indexing time-stamped data. This is because while other traditional databases would slow down when organising complex indices, InfluxDB is able to maintain high indexing speed because it uses a much more simple indexing system \cite{ionos}. \par
+
+The structure of the data points stored in InfluxDB is very simple. At the highest level we have the name of the measurement. This will then be followed by two main key value pairs called the tags and the fields. These tags describe the metadata, while the fields will contain the actual values of the measurement that are to be analysed and stored. All of this will be accompanied by the time stamp of the data point. \par
+
+One of the most important features of InfluxDB specific for this project is its schemaless design, as it allows for a better management of discontinuous data. This means that if some of the data does not appear in a few readings, this does not result into a problem with parsing and transferring to InfluxDB.\par 
+
+InfluxDB is also very easy to work with and implement because it has no external dependencies, making it a lot easier to run, and also contains very high performing HTTP APIs, which will make the data transfer using these APIs a lot easier. It also has a sample client available, so it becomes very fast and easy to start for beginners or new developers interested in this database.
+
+\subsubsection{Data visualisation: Grafana}
+
+Grafana is one of the most important data visualisation platforms, as it provides an extensive range of functionalities and it is very easy to use and manage. We will explore its different advantages and features in order to gain a basic understanding of the purpose of this data visualisation platform.\par
+
+Even if InfluxDB has its own dashboard in which you can keep track of the data, using Grafana also allowed us to introduce an extra layer of monitoring (this time from the server side), thanks to its Alerting feature. Grafana's alerting feature allows to send messages in many different ways (Discord, Teams or Slack notifications, e-mails, HTTP POST requests to specific URLs, etc.) according to the data collected. This can easily be done by everyone thanks to its graphical user interface, as you can define ranges of values allowed or conditions to be met interactively, without any need of programming knowldege. As this feature would be focused more on the backend/server side of this IoT system, it will be futher explored by my partner, in his counterpart of the project.
+
+Grafana also has a wide variety of dashboards, such as heatmaps, histograms, geomaps, etc. This is also very useful, as it provides with different ways of displaying data, such that we can use different ones according to the data received, making it a lot more comfortable to use and easier to visualise.\par
+
+Finally, Grafana is also able to provide support for many data sources, so we are not only able to import data from InfluxDB, but also from many others such as Graphite or Prometheus. This is a really interesting feature in terms of future scalability of the project, as the possibility of integrating many different data sources will be really useful for different types of data.
+
+\subsubsection{Security and Authentication: Tokens}
+
+This system is meant to be running in the University of Manchester Eduroam network, within the Manchester CMN server. Eduroam is a world-wide roaming service for the research and education community. It allows students and staff to connect to the Internet in an easy and secure way. This WPA2 Enterprise network uses the IEEE 802.1X standard for port-based Network Access Control, providing authentication of users in order for only authorised users to access the data shared over the network. Thanks to this, most of the security breaches are prevented, as only known users with access to the network would be able to access the data. \par 
+
+However, this does not mean that all security threats are prevented, as users authorised by the network could still attack the system. In order to ensure the interaction between different users and the database in a secure way, InfluxDB uses a token authentiation system. A specific token belongs to a user/organization that interacts with the database. This token is also able to reflect their InfluxDB permissions.\par
+
+There are three types of tokens: Admin tokens, All-Access Tokens and Read/Write Tokens. Admin tokens cannot be created manually, and have full access to all the different organisations in the database, with both read and right permissions to every single resource in each organisation. All-Access Tokens have full read and write access to every resource in a single specific organisation, while Read/Write Tokens have access to some specific resources in an organisation. In order to avoid possible mistakes when handling multiple organisations, it is more preferable to create an All-Access Token for every single organisation, rather than using the same Admin token for all of them \cite{influx:tokens}.\par
+
+Thanks to Grafana's Alerting feature, it is possible to remotely use the network to send HTTP requests that could remotely change things such as the sensor configuration parameters and more. In order to carry this new functionality out (which is being explored by my project partner in his counterpart of the project) the Arduino would need to host a HTTP server. However, this would mean that new possible security threats would appear, in which authorised Eduroam users could change the sensor configuration through an HTTP request. In order to prevent this, authentiation to the HTTP server should be necessary and would need to be implemented.
+
+\section{Implementation}
+
+Having chosen the appropriate hardware that will be used in order to carry out this project, I will now start talking about the different stages of the implementation, along with the specific areas of interest in which different tasks were performed in order to develop this IoT system. 
+
+\subsection{Data collection}
+
+The first area of focus of the project is the collection of data. In this stage we will focus on how to collect the data from the sensors, in order to analyse it and pre-process it.\par
+
+First, we will talk about the ESP32 microcontroller GPIO pin system. The ESP32 microcontroller has 48 pins, with multiple different functionalities such as Analog to Digital (ADC) channels, Digital to Analog (DAC) channels, UART, PWM, I2C and SPI communications, capacitive sensing pins, etc. Some pins have functions assigned by default, but most of them can be changed in the code. This is thanks to the ESP32 multiplexing feature (multiple peripherals connected to a single GPIO pin) \cite{randomnerd:gpio}. In order to talk about how the different hardware components were integrated into the system it is important to understand the types of communication protocols they use to interact with the microcontroller, the I2C and SPI protocols.
+
+\begin{itemize}
+    \item I2C is a serial (sends data 1 bit at a time) communication bus, used for peripherals without a focus on speed, but rather on low manufacturing costs and simplicity. With I2C you can have one or more master devices controlling one or multiple slaves, therefore it is very useful when performing multiple tasks with a single microcontroller, which is our specific case. It consists of two main lines which contain the data to be transmitted between the master and the slaves (SDA) and a clock signal (SCL), which is shared between the devices. I2C is synchronous, therefore the output is synchronised to the clock signal, which is controlled by the master. However, data is sent in packets, with a limited number of bits, therefore interrupting the transmission between each packet.
+    \item SPI is a synchronous serial communication interface, which supports a single master controlling one or multiple slaves. SPI is also known as ``the 4 wire bus'' due to the fact that consists of 4 four wires: MOSI, MISO, SCLK and CS. MOSI stands for Master Output Slave Input, line used for the data sent from the master to the slave. MISO (Master Input Slave Output) is the line which does the opposite, sending data from the slave to the master. SCLK is the clock signal, used in the same way as I2C, as it is also a synchronous communication bus. Lastly, the CS (Chip Select) line will identify which slave the master is interacting with. Differently to the I2C bus, the stream of data does not need to be interrupted during transmission, as any number of bits can be sent continuously.
+\end{itemize}
+
+\subsubsection{Integrating the BME 280 sensor}
+
+The specific version of the BME280 sensor is able to support both I2C and SPI communication. In this project it will be connected to the microcontroller using I2C communication. In the ESP32 microcontroller, the default pins for I2C (and the ones we are going to use for this project) are GPIO 21 (SDA) and 22 (SCL). We will also connect the Vin (Voltage input) line to the 3.3V pin and the Ground line (GND) to the Ground GPIO.\par
+
+In order to easily integrate the sensor with the microcontroller, it is necessary to download and import two essential external libraries specific for the sensor: The Adafruit BME280 library and the Adafruit Unified Sensor library. These are made by the manufacturer in order to easily program the sensor. After this, we just need to include the appropriate code:
+% Code here
+
+\subsubsection{Integrating the Velleman VMA438 OLED display}
+
+The Velleman VMA438 OLED display will be connected in a similar way to the BME280 sensor, as it also uses I2C communication. As mentioned before, I2C provides support for many slaves to be controlled by a single master device, so we are able to use the same pins for SDA (21) and SCL (22).\par
+
+In order to integrate this display, it is necessary to use its external library, U8g2lib. It provides specific methods that will set up the font, text position, etc. as well as very useful methods for drawing a wide variety of shapes.
+
+\subsubsection{Integrating the Honeywell 010BDAA5 sensor}
+
+The Honeywell differential pressure sensor will be a lot simpler to integrate, as it is an analog sensor. This analog sensor only has 3 wires: Ground (GND), which is the line that will connect to the ESP32 GND pin, Voltage Input (3.3V), which is the higher voltage with respect to GND, and Voltage Output (Vout) which will contain the measurement and will connect the any Analog to Digital input GPIO. When reading an analog sensor, you are measuring voltage levels between 0V and 3.3V. The voltage measured will correspond to a value between 0 and 4095, as these analog pins have a 12-bit resolution. However, we must take into account the fact that ADC channels are not linear, so the ESP will not be able to recognise properly the the highest or lowest voltages, giving the same result for voltages close to each other in these ranges.\par
+
+For this project I decided to use GPIO 34 as the pin where the Voltage Output line will connect to. Now the next step is to read the value measured by the sensor and convert it according to the specifications of the piece of hardware. In this case, the range of the sensor is from 0 bar to 10 bar, so the value measured will be converted to a final value within the sensor range.
+
+\subsubsection{Integrating the microSD card adapter}
+
+The HW-125 microSD card adapter uses SPI communication in order to connect to the ESP32 microcontroller, therefore this time we will use different GPIO pins to the ones we used for I2C communication. The SCLK (Serial Clock) line will connect to GPIO 18
+
+\subsection{Memory usage}
+
+One of the biggest challenges of working with one of these Arduino compatible microcontrollers is the appropriate use of its memory, as it is a limited resource that can be very useful, specially for our project. In order to try and store as much information as possible in the limited space that I have, I needed to reduce the size of the information as much as I could.\par
+
+The raw data that is collected from the sensors is not immediately sent to InfluxDB. Instead I decided to collect various readings from the sensors over a defined period of time. Once I have collected enough readings, I obtain their statistics (I calculate the minimum value, mean value and maximum value) and then proceed to send those through the network to InfluxDB.\par 
+
+In order to easily explain how the memory optimisation will be I will first have to explain how the data is constructed when sending it to InfluxDB: When we send data to InfluxDB, we effectively want to create a Datapoint, which is a data structure able to be representing by a string by being formatted in a specific way. This Datapoint will be formed by a series of data structures called KeyValue pairs. These key value pairs will be formatted as strings in the format [key + ``='' value]. Examples of these data structures are ``sensor\_address=198.162.0.3'' or ``temperature=28.75''. These key value pairs can be divided into 2 groups, tags and values. Tags are those key value pairs that hold the information about each specific microcontroller, such as the sensor address or the sensor group. The tags will help identify each microcontroller and monitor each one of them specifically. Values will hold information about the data that we want to monitor, such as the mean value, maximum value or even the different sensor configurations like the time of every push interval, etc. The format of the Datapoint will then be as follows: [measurement\_name, tags values] where each key value pair in both tags and values will be separated to the next by a comma (,) (Example: ``humidity,sensor\_address=198.162.0.3,sensor\_group=3 min\_value=45.56,mean\_value=47.84,max\_value=48.54'').\par
+
+Once the data has been pre-processed and the Datapoints have been created, they must be stored in a buffer. Every certain amount of time, this buffer will be flushed and sent to InfluxDB. However, not all HTTP requests will succeed and go as planned, and therefore we must account for the times when the network will not be functioning properly. When this happens, we do not want to lose the information, as it can be very valuable. Because of this, we want to keep the information stored locally in the buffer, so when the HTTP requests all work again, all the stored metrics would be sent to InfluxDB (If this happens, all those metrics will appear to have been collected at the same time, as the timestamp is created once they reach InfluxDB. This will be futher explored in the later sections of the project, where we will discuss different data logging options).\par
+
+In order not to lose the data, we need to keep as much information in the buffer as possible, so every small optimisation of that Datapoint would be a big advantage. As this project is about real time data collection, it consists of collecting the same metric periodically over a period of time. This means that over the course of many readings, the buffer that contains those Datapoints ends up storing the same information about the sensor and measurement type many times. That ends up being a lot of wasted storage that could be used in storing more metrics. In order to do that, I chose to implement bidirectional mapping: \par
+
+\begin{itemize}
+    \item I initialise the map with some strings that I know will appear many times over the collection of readings, such as strings about the tags (sensor configuration) or about the statistics of the data (minimum/maximum value, etc.). I assign to these strings the first few numbers starting from 0. The measurement names (such as ``temperature'') will be added by the developer when uploading the new microcontroller code, and they will be assigned to the next numbers in order until 255.
+    \item Instead of storing these strings (like ``humidity'', ``max\_value'' or ``sensor\_address'') every time a new Datapoint gets added, I will only store the associated number. 
+    \item By implementing bidirectional mapping, we can make sure that there are unique keys and unique values, and therefore we will never have problems associating a specific byte to a specific string.
+    \item While there is an implementation of bidirectional maps in the Boost external library, it had many functionalities that we were never going to use. I found a lot easier and memory effective to implement two symmetric maps; while we had to store the mapping twice over the course of many readings, this method proved to be very memory efficient. 
+\end{itemize}
+
+This implementation will not only be useful for buffer storage optimisation, but it will also provide with a way of identifying the measurements, as we will now have a measurement ID that we can use in situations like data logging (This will be explored in a later section).
+
+\subsection{Monitoring system}
+
+\subsubsection{Monitoring status and Alert levels}
+
+In order to add a level of intelligence to the Arduino ESP32 microcontrollers, I chose to introduce a basic monitoring system, which would be in charge of making different decisions according to the data that it is being collected. With this system in place, the microcontroller would be able to change vital parameters of the system such as the time it takes to send a group of measurements to InfluxDB. As mentioned before, the intelligence system should be as close to where the data is collected as possible. This is because we want to be able to quickly make decisions, ideally without having to go through data transfers through the network, where many different problems can arise. Instead, if the microcontroller that collects the data from the sensors is able to take some of the load from the server and already make decisions that can prevent problems with the system,the overall flow of the system will be a lot smoother and less prone to errors.\par
+
+The monitoring system consists of three main possible status, called ``OK\_'', ``WARNING'' and ``ALERT''. These will represent what we will call the ``health of the data''. This basically means that they will reflect if the data that is being collected from the sensors is within the bounds that we should be expecting them to fall into or not. We will be able to define those upper and lower thresholds before compilation, so if some data is falling outside of the range within the thresholds, we will note it as a possible error or failure in the health of the data. Depending on which status the ESP32 microcontroller is in, the frequency of pushing the data to InfluxDB will vary. The monitoring status of the system will be updated every time data is sent to InfluxDB, as it is then when the data is pre-processed, grouped, and analysed.\par
+
+In order to appropriately change between status, I had to come up with a design that would specify when exactly the best time is to change monitoring status, with everything that this change could entail. That is why I decided to use a variable called ``warningToAlert''. This variable will contain a number that will act as the measurement for how far up the alert scale we are right now. When the device is ``OK\_'', this variable will be set to 0. This will be its minimum value. \par
+
+This is how the data collection frequency will vary, according to the design of my monitoring system: 
+\begin{itemize}
+    \item OK\_: This status will indicate that everything is going as expected, with all values falling within the range defined by the developer. At the moment, the InfluxDB push interval is 120 seconds. This was chosen to be the default value for data transfers, as it allows for multiple readings to be taken before the average, minimum and maximum values are sent through. I also chose 16 as the default number of readings per metric sent, giving a frequency for data collection of 7.5 seconds. I chose 16 because it was a power of 2, so it was easily doubled or halved according to the status of the device. It also means that a large number of values are being collected before sending the data, and hence following the guideline of ``collecting as much data as possible and maintaining the system with the least amount of data transfers through the network as possible''.
+    \item WARNING: This status will indicate that some data might not be falling within the range of expected values that we defined, but this has happened recently and should not be taken as serious as the final status. When the device is in a WARNING status, the push interval to InfluxDB is lowered to 60 seconds, while the amount of readings per metric is lowered down to 8. By doing this, we keep the same frequency for the data collection from the sensors but we monitor the system more closely, as we send data to InfluxDB more often. If the device is ``OK\_'' but a single measure does not fall within the thresholds, it immediately goes into the ``WARNING'' status, but the numeric level of alert (reflected by the variable warningToAlert) becomes 2, so the numeric level must go down to 0 by sending 2 sets of ``healthy'' measurements to InfluxDB.
+    \item ALERT: This status reflects that there have multiple unhealthy measurements collected over the last priod of time, and they should be taken seriously and tried to be fixed. This monitoring status is reached when the numeric level of alert reaches 5 (this would mean that 4 consecutive unhealthy sets of measurements have been sent to InfluxDB). The push interval to the database is further lowered to 30 seconds, and the readings per metric get lowered to just 4 (keeping the same data collection frequency of 7.5 seconds). 
+\end{itemize}
+
+This system has proven to be an efficient way of monitoring the health of the data, with the objective of sending measurements more often to InfluxDB if the data that was being collected was not being expected. This point is the furthest the Arduino microcontroller will go to, as the server side (which was explored in more depth in the other counterpart of this project) consisting of InfluxDB and Grafana (or even a sensor control service application) will then have the possibility of create different types of alerts (such as email notifications) to quickly inform the appropriate members of staff.
+
+\subsubsection{Extra visual monitoring: Velleman VMA438}
+
+After adding this system, we still needed an easy way to check the health of the data collected by the device. Even though we could do that by going to either the InfluxDB or the Grafana dashboards, I wanted to make it easier to the members of staff already present by adding another piece of hardware to each microcontroller, a 128x64 OLED display. I decided to purchase the Velleman VMA438 OLED display, that connects to the Arduino via the I2C protocol. The display was easy enough to integrate, thanks to the external library U8g2lib that could be downloaded from the manufacturer's website. This library was really easy to use, and provided many different drawing functionalities that made it a great purchase, even if we did not need to use all of its capabilities. Any 128x64 OLED display with I2C protocol would have worked as well, as there are several libraries by Adafruit that easily integrate them with the microcontroller, but I found that the VMA438 would not work seamlessly with those libraries. If the VMA438 is not purchased, the code that integrates the display with the microcontroller would need to be changed. However, I am happy with my decision as it served its purpose, which is to display the monitoring status of the device at all times, letting the staff know if there is something that should be looked further or not.
+
+\subsection{Data Logging}
+
+\subsubsection{Flash memory: Status bytes}
+
+In order to add an extra level of monitoring to the Arduino in unexpected conditions (such as loss of power) I needed to make sure that the latest information collected by the Arduino would be stored in flash memory (so when the power goes back on, the information should still be there). However, as mentioned before, memory is a limited resource so I wanted to store as much information as possible in the least amount of memory as possible. After some research and discussions, I came across the concept of ``status bytes'', and decided to further investigate on them. An example of where status bytes can be found are MIDI (Musical Instrument Digital Interface) messages, where the status byte (which is the first byte in a message) represents the type of action that should be performed \cite{recording-blogs} \cite{midi}. \par 
+
+After discovering how much information a single byte could be carrying I decided to implement this system and store the last readings in flash memory, so if there was ever the need to check the microcontroller in order to see what had been happening with the readings until now, we just had to look at the status bytes last stored. These bytes can easily be checked by using the simple program I implemented called the ``Maintenance Interrogation'' program. \par 
+
+For every measurement analysed and sent to InfluxDB a status byte would be stored in memory, describing if the value had fallen within the range defined by the thresholds, if it was higher than the upper threshold or lower than the lower threshold. After every measurement was analysed, a final status byte with the new monitoring status would also be stored. However, 1 byte was not enough to describe all the information, so instead I decided to use 2 bytes for the status:
+\begin{itemize}
+    \item The first byte would correspond to the binary value associated to each measurement name. This value is reused from the buffer optimisation section, making the measurements easy to store and more memory efficient.
+    \item The second byte would contain either the information about the measurement health or the monitoring status. Bits 0, 1 and 2 represent the different monitoring status (OK\_, WARNING and ALERT), while bits 3, 4 and 5 represent if the minimum value had been lower than the range, if the maximum value had been higher than the range or if the data had fallen within the range respectively. 
+\end{itemize}
+
+This system provided a very efficient way of storing the latest data locally, in order to provide even more monitoring in case of unexpected circumstances like loss of power or failure in the transfers through the network. However, the very limited size of the flash memory in our ESP32 microcontroller proved to be a real challenge, as the amount of sets of data that could be stored could sometimes prove not to be enough. After considering the systems' really useful functionality and exploring its limitations, I decided to increase the amount of logging, even if it meant to purchase more hardware components that would help us with the process. 
+
+\subsubsection{External storage: HW-125 microSD card adapter}
+
+In order to futher monitor the data that was being collected by the microcontroller I decided to add another functionality: microSD card logging. With this method, many more sets of measurements could be stored, and the data could be described in a lot more detail. I ended up purchasing the HW-125 microSD card adapter. This hardware component connects to the Arduino microcontroller using the SPI protocol, and can easily be integrated with the system using the SD external library. In order to store the data, I also bought a 16GB microSD card, which covered for more than enough data to be logged. The logging process consists on appending written text with the data to a text file in the microSD card. Each log would consist of:
+
+\begin{itemize}
+    \item A sentence indicating the beginning of the logging process, along with its timestamp. This allows the members of staff to see if logging has stopped at any point (because of unexpected circumstances), and they will also be able to see the amount of time it has not been functioning properly for.
+    \item After that, every time the data is preprocessed and sent to InfluxDB the raw groups of values of every measurement will be appended to the text file, along with their timestamp and their status bytes. Finally the new monitoring status will also be appended to the text file. 
+\end{itemize}
+
+With this new improved logging system, it is possible for the Arduino to hold even more information in other unexpected cases such as failures in the transfers through the network. Thanks to the timestamps we will be able to monitor and keep track of the graph over that period of time. We previously were not able to do that, because if the network was not working, when it would start working properly again, every set of measurements stored in the buffer up to that point would be sent at the same time, and therefore would appear in InfluxDB as collected as the same time as well, because the timestamp would be created once the Datapoints reach InfluxDB.\par 
+
+Overall, This new hardware component successfully increased the level of logging, and thanks to the 16GB of possible storage, there will not be as much need to worry about memory optimisation for logging. I also decided to display in the Velleman VMA438 OLED display the amount of memory used from the microSD memory card. This will easily tell the members of staff when to change SD cards if they ran out of storage. 
+
+\section{Conclusions}
 
 \newpage
-\bibliographystyle{unsrt}
-\bibliography{research}
+\printbibliography
 
 \end{document}

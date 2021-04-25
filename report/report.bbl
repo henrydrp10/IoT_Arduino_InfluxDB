@@ -1,45 +1,503 @@
-\begin{thebibliography}{1}
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
 
-\bibitem{french2016digital}
-Aaron~M French and Jung~P Shim.
-\newblock The digital revolution: Internet of things, 5g, and beyond.
-\newblock {\em Communications of the Association for Information Systems},
-  38(1):40, 2016.
 
-\bibitem{aeris}
-Aeris India.
-\newblock What is iot? defining the internet of things (iot), 04 2020.
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{french2016digital}{article}{}
+      \name{author}{2}{}{%
+        {{hash=aeacc1986d27b193381997ed2fe0fe12}{%
+           family={French},
+           familyi={F\bibinitperiod},
+           given={Aaron\bibnamedelima M},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=5ce06d0c7b5ac922a83ca7488f0380db}{%
+           family={Shim},
+           familyi={S\bibinitperiod},
+           given={Jung\bibnamedelima P},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \strng{fullhash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \strng{bibnamehash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \strng{authorbibnamehash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \strng{authornamehash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \strng{authorfullhash}{d9de7b34d2cb6a675381f0340ac2215d}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the Association for Information Systems}
+      \field{number}{1}
+      \field{title}{The digital revolution: Internet of Things, 5G, and beyond}
+      \field{volume}{38}
+      \field{year}{2016}
+      \field{pages}{40}
+      \range{pages}{1}
+    \endentry
+    \entry{aeris}{online}{}
+      \name{author}{1}{}{%
+        {{hash=f4277a0bc96d4eaa5f228e38e48665c9}{%
+           family={India},
+           familyi={I\bibinitperiod},
+           given={Aeris},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \strng{fullhash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \strng{bibnamehash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \strng{authorbibnamehash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \strng{authornamehash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \strng{authorfullhash}{f4277a0bc96d4eaa5f228e38e48665c9}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{04}
+      \field{title}{What is IoT? Defining the Internet of Things (IoT)}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.aeris.com/in/what-is-iot
+      \endverb
+      \verb{url}
+      \verb https://www.aeris.com/in/what-is-iot
+      \endverb
+    \endentry
+    \entry{ashton}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2710e37a7e37dd6f0a784ffd7e37e589}{%
+           family={Ashton},
+           familyi={A\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \strng{fullhash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \strng{bibnamehash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \strng{authorbibnamehash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \strng{authornamehash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \strng{authorfullhash}{2710e37a7e37dd6f0a784ffd7e37e589}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{RFID Journal}
+      \field{title}{That 'Internet of Things' Thing: In the real world, things matter more than ideas.}
+      \field{year}{2009}
+    \endentry
+    \entry{suresh}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=2bc546b4bb3c2e78fe393a24004fc30c}{%
+           family={{Suresh}},
+           familyi={S\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=27830b292e8409831ef8aa029064c1d1}{%
+           family={{Daniel}},
+           familyi={D\bibinitperiod},
+           given={J.\bibnamedelimi V.},
+           giveni={J\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=fac337c8eee902551a41fa158eef2bcf}{%
+           family={{Parthasarathy}},
+           familyi={P\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=4b8e7095c98e92e6ca67fb675800c453}{%
+           family={{Aswathy}},
+           familyi={A\bibinitperiod},
+           given={R.\bibnamedelimi H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \strng{fullhash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \strng{bibnamehash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \strng{authorbibnamehash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \strng{authornamehash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \strng{authorfullhash}{f52bff20e256c2db7a4fc4c7ef8eb409}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2014 International Conference on Science Engineering and Management Research (ICSEMR)}
+      \field{title}{A state of the art review on the Internet of Things (IoT) history, technology and fields of deployment}
+      \field{year}{2014}
+      \field{pages}{1\bibrangedash 8}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/ICSEMR.2014.7043637
+      \endverb
+    \endentry
+    \entry{gartner:covid}{book}{}
+      \name{author}{1}{}{%
+        {{hash=ba9cce1b01720388a0f95f6e272540d7}{%
+           family={Goasduff},
+           familyi={G\bibinitperiod},
+           given={Laurence},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Stamford, Connecticut, USA}%
+      }
+      \list{publisher}{1}{%
+        {Gartner Inc.}%
+      }
+      \strng{namehash}{ba9cce1b01720388a0f95f6e272540d7}
+      \strng{fullhash}{ba9cce1b01720388a0f95f6e272540d7}
+      \strng{bibnamehash}{ba9cce1b01720388a0f95f6e272540d7}
+      \strng{authorbibnamehash}{ba9cce1b01720388a0f95f6e272540d7}
+      \strng{authornamehash}{ba9cce1b01720388a0f95f6e272540d7}
+      \strng{authorfullhash}{ba9cce1b01720388a0f95f6e272540d7}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Gartner Survey Reveals 47\% of Organizations Will Increase Investments in IoT Despite the Impact of COVID-19}
+      \field{year}{2020}
+    \endentry
+    \entry{mordor}{online}{}
+      \name{author}{1}{}{%
+        {{hash=8fb529e02f5892913129e6bf58a36122}{%
+           family={Intelligence},
+           familyi={I\bibinitperiod},
+           given={Mordor},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{8fb529e02f5892913129e6bf58a36122}
+      \strng{fullhash}{8fb529e02f5892913129e6bf58a36122}
+      \strng{bibnamehash}{8fb529e02f5892913129e6bf58a36122}
+      \strng{authorbibnamehash}{8fb529e02f5892913129e6bf58a36122}
+      \strng{authornamehash}{8fb529e02f5892913129e6bf58a36122}
+      \strng{authorfullhash}{8fb529e02f5892913129e6bf58a36122}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{IoT Analytics Market - Growth, Trends, COVID-19 Impact, and Forecasts (2021 - 2026)}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.mordorintelligence.com/industry-reports/iot-analytics-market
+      \endverb
+      \verb{url}
+      \verb https://www.mordorintelligence.com/industry-reports/iot-analytics-market
+      \endverb
+    \endentry
+    \entry{digi}{online}{}
+      \name{author}{1}{}{%
+        {{hash=e368ea18f609d7883f8405a493c958f8}{%
+           family={Jahnke},
+           familyi={J\bibinitperiod},
+           given={Alec},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{e368ea18f609d7883f8405a493c958f8}
+      \strng{fullhash}{e368ea18f609d7883f8405a493c958f8}
+      \strng{bibnamehash}{e368ea18f609d7883f8405a493c958f8}
+      \strng{authorbibnamehash}{e368ea18f609d7883f8405a493c958f8}
+      \strng{authornamehash}{e368ea18f609d7883f8405a493c958f8}
+      \strng{authorfullhash}{e368ea18f609d7883f8405a493c958f8}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{07}
+      \field{title}{The 4 Stages of IoT Architecture}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.digi.com/blog/post/the-4-stages-of-iot-architecture
+      \endverb
+      \verb{url}
+      \verb https://www.digi.com/blog/post/the-4-stages-of-iot-architecture
+      \endverb
+    \endentry
+    \entry{marlabs}{online}{}
+      \name{author}{1}{}{%
+        {{hash=fa03ec1bfceb211ff1b354ad5ea5653a}{%
+           family={Sharma},
+           familyi={S\bibinitperiod},
+           given={Meenakshi},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \strng{fullhash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \strng{bibnamehash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \strng{authorbibnamehash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \strng{authornamehash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \strng{authorfullhash}{fa03ec1bfceb211ff1b354ad5ea5653a}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{09}
+      \field{title}{Stages of “Internet of Things” Architecture}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.marlabs.com/blog-stages-of-iot-architecture
+      \endverb
+      \verb{url}
+      \verb https://www.marlabs.com/blog-stages-of-iot-architecture
+      \endverb
+    \endentry
+    \entry{blume}{online}{}
+      \name{author}{1}{}{%
+        {{hash=ce50000bed3906a0ed3efd85fcb0e122}{%
+           family={Global},
+           familyi={G\bibinitperiod},
+           given={Blume},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \strng{fullhash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \strng{bibnamehash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \strng{authorbibnamehash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \strng{authornamehash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \strng{authorfullhash}{ce50000bed3906a0ed3efd85fcb0e122}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{How the Internet of Things Is Transforming Supply Chain Management}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://www.blumeglobal.com/learning/internet-of-things/
+      \endverb
+      \verb{url}
+      \verb https://www.blumeglobal.com/learning/internet-of-things/
+      \endverb
+    \endentry
+    \entry{chathuranga}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d27a90321a3fa069e0d323a19fccd6ec}{%
+           family={Wijerathna\bibnamedelima Basnayaka},
+           familyi={W\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Chathuranga\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \strng{fullhash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \strng{bibnamehash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \strng{authorbibnamehash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \strng{authornamehash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \strng{authorfullhash}{d27a90321a3fa069e0d323a19fccd6ec}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{04}
+      \field{title}{Internet of Things for Smart Cities}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.13140/RG.2.2.27861.78566
+      \endverb
+    \endentry
+    \entry{digiteum}{online}{}
+      \name{author}{1}{}{%
+        {{hash=54323f1e56f5920c852b78a488060b61}{%
+           family={Team},
+           familyi={T\bibinitperiod},
+           given={Digiteum},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{54323f1e56f5920c852b78a488060b61}
+      \strng{fullhash}{54323f1e56f5920c852b78a488060b61}
+      \strng{bibnamehash}{54323f1e56f5920c852b78a488060b61}
+      \strng{authorbibnamehash}{54323f1e56f5920c852b78a488060b61}
+      \strng{authornamehash}{54323f1e56f5920c852b78a488060b61}
+      \strng{authorfullhash}{54323f1e56f5920c852b78a488060b61}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Comparing Arduino vs. Raspberry Pi for IoT Projects}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.digiteum.com/comparing-arduino-raspberry-pi-iot/
+      \endverb
+      \verb{url}
+      \verb https://www.digiteum.com/comparing-arduino-raspberry-pi-iot/
+      \endverb
+    \endentry
+    \entry{influx:time-series}{article}{}
+      \name{author}{1}{}{%
+        {{hash=20a546df5ed7df7e4956a5a686aed266}{%
+           family={Dix},
+           familyi={D\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{20a546df5ed7df7e4956a5a686aed266}
+      \strng{fullhash}{20a546df5ed7df7e4956a5a686aed266}
+      \strng{bibnamehash}{20a546df5ed7df7e4956a5a686aed266}
+      \strng{authorbibnamehash}{20a546df5ed7df7e4956a5a686aed266}
+      \strng{authornamehash}{20a546df5ed7df7e4956a5a686aed266}
+      \strng{authorfullhash}{20a546df5ed7df7e4956a5a686aed266}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The best way to store, collect and analyze time series data}
+      \field{month}{06}
+      \field{title}{Why Time Series Matters, Real-Time Analytics and Sensor Data}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.influxdata.com/the-best-way-to-store-collect-analyze-time-series-data/
+      \endverb
+      \verb{url}
+      \verb https://www.influxdata.com/the-best-way-to-store-collect-analyze-time-series-data/
+      \endverb
+    \endentry
+    \entry{ionos}{online}{}
+      \name{author}{1}{}{%
+        {{hash=cce736b96e15e967e621281a178bfbd6}{%
+           family={Matters},
+           familyi={M\bibinitperiod},
+           given={Technical},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{cce736b96e15e967e621281a178bfbd6}
+      \strng{fullhash}{cce736b96e15e967e621281a178bfbd6}
+      \strng{bibnamehash}{cce736b96e15e967e621281a178bfbd6}
+      \strng{authorbibnamehash}{cce736b96e15e967e621281a178bfbd6}
+      \strng{authornamehash}{cce736b96e15e967e621281a178bfbd6}
+      \strng{authorfullhash}{cce736b96e15e967e621281a178bfbd6}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{09}
+      \field{title}{InfluxDB – explanation, advantages, and first steps}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.ionos.com/digitalguide/hosting/technical-matters/what-is-influxdb/
+      \endverb
+      \verb{url}
+      \verb https://www.ionos.com/digitalguide/hosting/technical-matters/what-is-influxdb/
+      \endverb
+    \endentry
+    \entry{influx:tokens}{online}{}
+      \name{author}{1}{}{%
+        {{hash=aeaf5074e9f38f1268187fc89e1e8d54}{%
+           family={InfluxData},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \strng{fullhash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \strng{bibnamehash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \strng{authorbibnamehash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \strng{authornamehash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \strng{authorfullhash}{aeaf5074e9f38f1268187fc89e1e8d54}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Manage authentication tokens}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://docs.influxdata.com/influxdb/v2.0/security/tokens
+      \endverb
+      \verb{url}
+      \verb https://docs.influxdata.com/influxdb/v2.0/security/tokens
+      \endverb
+    \endentry
+    \entry{randomnerd:gpio}{online}{}
+      \name{author}{1}{}{%
+        {{hash=7d10d2c812b4f3169587e5307e592372}{%
+           family={RandomNerdTutorials},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{7d10d2c812b4f3169587e5307e592372}
+      \strng{fullhash}{7d10d2c812b4f3169587e5307e592372}
+      \strng{bibnamehash}{7d10d2c812b4f3169587e5307e592372}
+      \strng{authorbibnamehash}{7d10d2c812b4f3169587e5307e592372}
+      \strng{authornamehash}{7d10d2c812b4f3169587e5307e592372}
+      \strng{authorfullhash}{7d10d2c812b4f3169587e5307e592372}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{ESP32 Pinout Reference: Which GPIO pins should you use?}
+      \field{year}{2015}
+      \verb{urlraw}
+      \verb https://randomnerdtutorials.com/esp32-pinout-reference-gpios
+      \endverb
+      \verb{url}
+      \verb https://randomnerdtutorials.com/esp32-pinout-reference-gpios
+      \endverb
+    \endentry
+    \entry{recording-blogs}{online}{}
+      \name{author}{1}{}{%
+        {{hash=f926a20acc7856e213d3ec4dfd396801}{%
+           family={Blogs},
+           familyi={B\bibinitperiod},
+           given={Recording},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{f926a20acc7856e213d3ec4dfd396801}
+      \strng{fullhash}{f926a20acc7856e213d3ec4dfd396801}
+      \strng{bibnamehash}{f926a20acc7856e213d3ec4dfd396801}
+      \strng{authorbibnamehash}{f926a20acc7856e213d3ec4dfd396801}
+      \strng{authornamehash}{f926a20acc7856e213d3ec4dfd396801}
+      \strng{authorfullhash}{f926a20acc7856e213d3ec4dfd396801}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{08}
+      \field{title}{Status byte (of a MIDI message)}
+      \field{year}{2011}
+      \verb{urlraw}
+      \verb https://www.recordingblogs.com/wiki/status-byte-of-a-midi-message
+      \endverb
+      \verb{url}
+      \verb https://www.recordingblogs.com/wiki/status-byte-of-a-midi-message
+      \endverb
+    \endentry
+    \entry{midi}{online}{}
+      \name{author}{1}{}{%
+        {{hash=ab4b923c709fb1e52ccd19d5b8735fda}{%
+           family={Association},
+           familyi={A\bibinitperiod},
+           given={Midi},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \strng{fullhash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \strng{bibnamehash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \strng{authorbibnamehash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \strng{authornamehash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \strng{authorfullhash}{ab4b923c709fb1e52ccd19d5b8735fda}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{05}
+      \field{title}{Expanded MIDI 1.0 Messages List (Status Bytes)}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://www.midi.org/specifications-old/item/table-2-expanded-messages-list-status-bytes
+      \endverb
+      \verb{url}
+      \verb https://www.midi.org/specifications-old/item/table-2-expanded-messages-list-status-bytes
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
 
-\bibitem{ashton}
-Kevin Ashton.
-\newblock That 'internet of things' thing: In the real world, things matter
-  more than ideas.
-\newblock {\em RFID Journal}, 2009.
-
-\bibitem{suresh}
-P.~{Suresh}, J.~V. {Daniel}, V.~{Parthasarathy}, and R.~H. {Aswathy}.
-\newblock A state of the art review on the internet of things (iot) history,
-  technology and fields of deployment.
-\newblock In {\em 2014 International Conference on Science Engineering and
-  Management Research (ICSEMR)}, pages 1--8, 2014.
-
-\bibitem{gartner:covid}
-Laurence Goasduff.
-\newblock {\em Gartner Survey Reveals 47\% of Organizations Will Increase
-  Investments in IoT Despite the Impact of COVID-19}.
-\newblock Gartner Inc., Stamford, Connecticut, USA, 2020.
-
-\bibitem{mordor}
-Mordor Intelligence.
-\newblock Iot analytics market - growth, trends, covid-19 impact, and forecasts
-  (2021 - 2026), 12 2020.
-
-\bibitem{digi}
-Digi~International Alec~Jahnke, Sales~Engineer.
-\newblock The 4 stages of iot architecture, 07 2020.
-
-\bibitem{marlabs}
-Meenakshi Sharma.
-\newblock Stages of “internet of things” architecture, 09 2019.
-
-\end{thebibliography}

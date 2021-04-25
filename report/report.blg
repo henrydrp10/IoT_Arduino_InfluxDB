@@ -1,46 +1,17 @@
-This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: report.aux
-The style file: unsrt.bst
-Database file #1: research.bib
-You've used 8 entries,
-            1791 wiz_defined-function locations,
-            486 strings with 4598 characters,
-and the built_in function-call counts, 1259 in all, are:
-= -- 94
-> -- 46
-< -- 1
-+ -- 20
-- -- 12
-* -- 51
-:= -- 198
-add.period$ -- 20
-call.type$ -- 8
-change.case$ -- 7
-chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 64
-empty$ -- 157
-format.name$ -- 12
-if$ -- 291
-int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 5
-newline$ -- 39
-num.names$ -- 8
-pop$ -- 44
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 35
-stack$ -- 0
-substring$ -- 18
-swap$ -- 14
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 11
-width$ -- 9
-write$ -- 77
+[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
+[0] Config.pm:307> INFO - Logfile is 'report.blg'
+[101] biber:322> INFO - === Sun Apr 25, 2021, 18:21:34
+[123] Biber.pm:415> INFO - Reading 'report.bcf'
+[205] Biber.pm:943> INFO - Found 17 citekeys in bib section 0
+[223] Biber.pm:4256> INFO - Processing section 0
+[223] Utils.pm:75> INFO - Globbing data source 'research.bib'
+[224] Utils.pm:91> INFO - Globbed data source 'research.bib' to research.bib
+[238] Biber.pm:4455> INFO - Looking for bibtex format file 'research.bib' for section 0
+[240] bibtex.pm:1653> INFO - LaTeX decoding ...
+[259] bibtex.pm:1471> INFO - Found BibTeX data source 'research.bib'
+[364] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'variable = shifted' with 'variable = non-ignorable'
+[365] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[365] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-GB'
+[365] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-GB'
+[384] bbl.pm:652> INFO - Writing 'report.bbl' with encoding 'UTF-8'
+[395] bbl.pm:755> INFO - Output to report.bbl
