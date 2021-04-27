@@ -39,53 +39,56 @@
 \abx@aux@cite{digiteum}
 \abx@aux@segm{0}{0}{digiteum}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}System Architecture}{9}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Hardware components selection}{9}\protected@file@percent }
-\newlabel{fig:esp32}{{3.2.1}{10}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces ESP32 microcontroller by Espressif}}{10}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Overview of the system architecture}{9}\protected@file@percent }
+\newlabel{fig:system-arch}{{3.2.1}{9}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Simple diagram describing the system architecture}}{9}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Hardware components selection}{9}\protected@file@percent }
+\newlabel{fig:esp32}{{3.2.2}{11}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces ESP32 microcontroller by Espressif}}{11}\protected@file@percent }
+\newlabel{fig:bme280}{{3.2.2}{11}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces BME280 temperature, humidity and barometric pressure sensor}}{11}\protected@file@percent }
 \abx@aux@cite{influx:time-series}
 \abx@aux@segm{0}{0}{influx:time-series}
 \abx@aux@cite{influx:time-series}
 \abx@aux@segm{0}{0}{influx:time-series}
 \abx@aux@cite{ionos}
 \abx@aux@segm{0}{0}{ionos}
-\newlabel{fig:bme280}{{3.2.1}{11}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces BME280 temperature, humidity and barometric pressure sensor}}{11}\protected@file@percent }
-\newlabel{fig:010BGAA5}{{3.2.1}{11}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Regular analog pressure tranducer}}{11}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Storing Time-Series Data: InfluxDB}{11}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Data visualisation: Grafana}{12}\protected@file@percent }
+\newlabel{fig:010BGAA5}{{3.2.2}{12}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Regular analog pressure tranducer}}{12}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Storing Time-Series Data: InfluxDB}{12}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Data visualisation: Grafana}{13}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.5}Security and Authentication: Tokens}{13}\protected@file@percent }
 \abx@aux@cite{influx:tokens}
 \abx@aux@segm{0}{0}{influx:tokens}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Security and Authentication: Tokens}{13}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation}{13}\protected@file@percent }
 \abx@aux@cite{randomnerd:gpio}
 \abx@aux@segm{0}{0}{randomnerd:gpio}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation}{14}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Data collection}{14}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Integrating the BME 280 sensor}{14}\protected@file@percent }
-\newlabel{code:bme}{{4.1.1}{15}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{bme.ino}{15}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Sample code for integrating the BME280 sensor}}{15}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Integrating the BME 280 sensor}{15}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Integrating the Honeywell 010BDAA5 sensor}{15}\protected@file@percent }
+\newlabel{code:bme}{{4.1.1}{16}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{bme.ino}{16}\protected@file@percent }
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Sample code for integrating the BME280 sensor}}{16}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Integrating the Velleman VMA438 OLED display}{16}\protected@file@percent }
-\newlabel{code:oled}{{4.1.3}{16}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{oled.ino}{16}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Sample code for integrating the VMA438 OLED display}}{16}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Integrating the microSD card adapter}{16}\protected@file@percent }
-\newlabel{code:sd}{{4.1.4}{17}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{sd.ino}{17}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Sample code for integrating the HW-125 microSD card adapter}}{17}\protected@file@percent }
+\newlabel{code:oled}{{4.1.3}{17}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{oled.ino}{17}\protected@file@percent }
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Sample code for integrating the VMA438 OLED display}}{17}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Integrating the microSD card adapter}{17}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Memory usage}{17}\protected@file@percent }
+\newlabel{code:sd}{{4.1.4}{18}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{sd.ino}{18}\protected@file@percent }
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Sample code for integrating the HW-125 microSD card adapter}}{18}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Monitoring system}{19}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Monitoring status and Alert levels}{19}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Extra visual monitoring: Velleman VMA438}{20}\protected@file@percent }
 \abx@aux@cite{recording-blogs}
 \abx@aux@segm{0}{0}{recording-blogs}
 \abx@aux@cite{midi}
 \abx@aux@segm{0}{0}{midi}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Extra visual monitoring: Velleman VMA438}{21}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Data Logging}{21}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Flash memory: Status bytes}{21}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}External storage: HW-125 microSD card adapter}{22}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{22}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{23}\protected@file@percent }
 \abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{french2016digital}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{aeris}{none/global//global/global}

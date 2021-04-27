@@ -111,6 +111,17 @@ This project will consist on different stages that must be achieved in order to 
 
 \subsection{System Architecture}
 
+\subsubsection{Overview of the system architecture}
+
+This project will consist of one or multiple microcontrollers that will periodically collect data from sensors. Once multiple readings of the data have been collected, the microcontrollers will be in charge of analysing the data, pre-processing it, and sending it to a time series database (InfluxDB). When analysing the data, the microcontrollers will be able to make quick decisions, thanks to their monitoring system, which will check the well-being of the device. The status of the monitoring device will be easily available thanks to an integrated OLED display. The data stored over time at InfluxDB will be easily available for monitoring thanks to the Grafana visualisation platform. In order to avoid possible loss of data, logging will be implemented in various ways, such as the use of flash memory or an external memory card. Here we can have a look at a diagram about the system:
+
+\begin{figure}[h]
+\label{fig:system-arch}
+\includegraphics[scale=0.45]{system-arch}
+\centering
+\caption{Simple diagram describing the system architecture}
+\end{figure}
+
 \subsubsection{Hardware components selection}
 
 The decision of the microcontroller board and the other hardware components will be crucial for the best possible and most efficient system. Therefore, we need to be able to define which of them are the most adequate for this project.\par
