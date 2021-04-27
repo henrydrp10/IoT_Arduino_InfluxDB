@@ -7,9 +7,11 @@
 \usepackage{listings}
 \usepackage[style=ieee,citestyle=numeric]{biblatex}
 \usepackage{parskip}
+\usepackage{graphicx}
 
 \addbibresource{research.bib}
 \setlength{\parskip}{1em}
+\graphicspath{ {images/} }
 
 \title{Exploring real time data collection and parameter monitoring in an Internet of Things system}
 \author{Author: Henry David Rubiano Poveda \and Supervisor: Prof. Thomas Thomson}
@@ -50,6 +52,15 @@ The main objective of this third year project is to explore the collection, pre-
 
 \subsection{Structure} 
 
+The structure of the report will consist on the following sections, that will explore in more detail some of the key aspects of this project:
+
+\begin{itemize}
+    \item First, the report will try to give a comprehensive definition and background on the history of the Internet of Things, apart from describing its main purpose. This will be very important in order to properly understand the main motivations of the project. In this section the different applications of this field and its system architecture will also be explained. 
+    \item The second section will consist on the Design and Approach, which will go through the hardware components selection and some of the most important aspects of the project, such as the concept of storing the specific type of data we are working with (time series data), the visualisation platform that will be used, and a brief overview of the security threats and features of the project.
+    \item We will follow the previous section with the Implementation, where we will look in more detail the techniques used to expand on the previous developed version, which will consist of the new features of data collection, memory optimisation, data monitoring and data logging.
+    \item We will finish the report reflecting on the project, and arriving to conclusions that will certainly be useful for future further developments and progress. 
+\end{itemize}
+
 \section{Background}
 \subsection{The Internet of Things}
 
@@ -88,7 +99,7 @@ Internet of Things' systems have proven to be able to be very important tools wi
 
 \section{Design and Approach}
 
-\subsection{Project Structure and Requirements}
+\subsection{Project Structure}
 
 This project will consist on different stages that must be achieved in order to gain the necessary knowledge to develop a product that can be properly applied to a specialist real world application: 
 \begin{itemize}
@@ -106,7 +117,52 @@ The decision of the microcontroller board and the other hardware components will
 
 In the previous project, there were sketches for the use of an Arduino compatible microcontroller board (ESP32) and a DHT22 temperature and humidity sensor. We will consider those choices plus others in the comparison.\par
 
-Choosing the right hardware components for an IoT system is a very important decision to make, as we want to make sure that the different components will be the most useful for our specific needs and that the system will run as efficiently as possible. We must take many factors into consideration, such as scalability, functionality, cost, power requirements, etc \cite{digiteum}.
+Choosing the right hardware components for an IoT system is a very important decision to make, as we want to make sure that the different components will be the most useful for our specific needs and that the system will run as efficiently as possible. We must take many factors into consideration, such as scalability, functionality, cost, power requirements, etc \cite{digiteum}.\par
+
+\paragraph*{Microcontroller:}
+The most important decision will be choosing the appropriate microcontroller / single-board computer, as this device will power the system and will do most operations with the data. The first important choice was between a microcontroller and a single-board computer (such as a Raspberry Pi). While a Raspberry Pi is more powerful and has its own Operating System, there was no real purpose for its use, as an Arduino microcontroller and its open hardware nature allows for multiple different types of sensors and embedded systems to be connected to the microcontroller thanks to its GPIO pins. We must also take into account that while the microcontroller cannot handle intensive tasks like the Raspberry Pi can, it also uses a lot less power, which is important for this project, as it is running uninterruptedly. Here we can see the different microcontrollers considered in the decision:
+
+\begin{itemize}
+    \item The first option considered was the Particle Photon. This microcontroller had a STM32F205RGY6 120Mhz ARM Cortex M3, with 1MB of flash memory and 128KB of RAM. It had 18 mixed-signal GPIO pins and its recommended power supply was from 3.6V to 5.5V.
+    \item The second option was the ESP32 microcontrollerby Espressif. It was powered by a Tensilica Xtensa Dual-Core 32-bit LX6 microprocessor, running at 160MHz, with 4MB of flash memory and 520 KB of SRAM. It had 34 GPIO pins with multiple functionalities and run with a recommended power supply from 2.3V to 3.6V.
+    \item The last option considered was an Arduino UNO WiFi Rev2, with a ATMEGA4809 processor, running at 16MHz. It had 48KB of flash memory, and 6KB of SRAM. It only has 14 GPIO pins and its recommended power supply is from 7V to 12V. 
+\end{itemize}
+
+After looking at the different possibilities for a microcontroller board to be used, I have decided that it would be best to go for an ESP32 type microcontroller, because of the following reasons: It has the fastest processor at 160 MHz, better for processing all the information that needs to collect from the sensors; more amount of memory, which will allow it to be faster with more intensive tasks; more GPIO pins available, which will be necessary for the number of sensors that we might need to connect to it and it also has the lowest recommended power supply, which will be beneficial as it will be connected at all times. Apart from all of the previous reasons, it is also the cheapest of all of the options.
+
+\begin{figure}[h]
+\label{fig:esp32}
+\includegraphics[scale=0.06]{esp32-devkitc-v4-front}
+\centering
+\caption{ESP32 microcontroller by Espressif}
+\end{figure}
+
+\paragraph*{Sensors:}
+In this system, we will need to collect basic data for the management of the environment of a cleanroom. Those would be: Temperature, humidity, absolute pressure, barometric pressure. Most of the temperature sensors in this comparison are also able to measure other features such as humidity or even barometric pressure. We will take that into account when comparison. The different options considered for the temperature and humidity sensors are:
+
+\begin{itemize}
+    \item The first option is the DHT22 temperature and humidity sensor. This was the sensor chosen in the previous version of this project. It measures temperature from -40C to 80C, with an accuracy of +-0.5C, and it covers from 0\% to 100\% of humidity with an accuracy of +-2\%, with its recommended power supply from 3V to 6V. However it does not measure barometric pressure, which might be useful in terms of using as least hardware as possible.
+    \item The next option is the LM35DZ temperature sensor. It measures temperature from -55C to 150C, with an estimated accuracy of +-0.5C at 25C, with its recommended power supply from 4V to 30V. However it does not measure humidity or barometric pressure.
+    \item The last option is the BME280 temperature, humidity and barometric pressure sensor. It measures temperature from -40C to 85C, with an accuracy of +-0.5C, and it covers from 0\% to 100\% of humidity with an accuracy of +-3\%, with its recommended power supply from 3.3V to 5V. It also measures barometric pressure sensor, from 330hPa to 1100hPa, with an accuracy of +-1hPa.
+\end{itemize}
+
+After looking at these three main possibilities, I decided to go for the BME280, because I found it easier to find, and cheaper. This was my line of thoughts: I ruled out the LM35DZ because it did not have a humidity sensor as well as the temperature sensor, so it meant to look for a different sensor for the humidity. Most of the humidity sensors came in conjunction with a temperature sensor so it was not a good choice. Also, it was analogue, so it would use more power, needing more power supply for it. I decided to go for the BME280 because it was easier to find and cheaper, apart from also being able to measure barometric pressure.\par
+
+\begin{figure}[h]
+\label{fig:bme280}
+\includegraphics[scale=0.25]{BMX280}
+\centering
+\caption{BME280 temperature, humidity and barometric pressure sensor}
+\end{figure}
+
+We will next look at the absolute pressure sensors, also called pressure transducers. At the beginning of the search I found some options that I thought could be valid for our project (such as the MPXH6400AC6U, MPXA4250AC6U and the MPX5100AP). However, these all could only measure from 0kPa to 400kPa approximately. After learning that we were looking for a sensor with an operating pressure range of 0bar to 10bar, I had to start searching again. I could only find one model able to operate within that pressure range, the Honeywell HSCDLNN010BASA3 (010BASA3 for short). Due to various factors (including Covid-19 restrictions) the sensor did not arrive, and I was instead delivered a differential pressure sensor (010BGAA5). Due to the fact that we were not going to the CMN facilities at all (because of the pandemic) and both are analog sensors that connect to the microcontroller in an identical way, I decided to use that sensor (even if it was not what I originally wanted). This change does not affect the outcome of the project in any way, so there are no problems with this decision.
+
+\begin{figure}[h]
+\label{fig:010BGAA5}
+\includegraphics[scale=0.15]{large}
+\centering
+\caption{Regular analog pressure tranducer}
+\end{figure}
 
 \subsubsection{Storing Time-Series Data: InfluxDB}
 
@@ -151,7 +207,7 @@ The first area of focus of the project is the collection of data. In this stage 
 First, we will talk about the ESP32 microcontroller GPIO pin system. The ESP32 microcontroller has 48 pins, with multiple different functionalities such as Analog to Digital (ADC) channels, Digital to Analog (DAC) channels, UART, PWM, I2C and SPI communications, capacitive sensing pins, etc. Some pins have functions assigned by default, but most of them can be changed in the code. This is thanks to the ESP32 multiplexing feature (multiple peripherals connected to a single GPIO pin) \cite{randomnerd:gpio}. In order to talk about how the different hardware components were integrated into the system it is important to understand the types of communication protocols they use to interact with the microcontroller, the I2C and SPI protocols.
 
 \begin{itemize}
-    \item I2C is a serial (sends data 1 bit at a time) communication bus, used for peripherals without a focus on speed, but rather on low manufacturing costs and simplicity. With I2C you can have one or more master devices controlling one or multiple slaves, therefore it is very useful when performing multiple tasks with a single microcontroller, which is our specific case. It consists of two main lines which contain the data to be transmitted between the master and the slaves (SDA) and a clock signal (SCL), which is shared between the devices. I2C is synchronous, therefore the output is synchronised to the clock signal, which is controlled by the master. However, data is sent in packets, with a limited number of bits, therefore interrupting the transmission between each packet.
+    \item I2C is a serial communication bus (sends data 1 bit at a time), used for peripherals without a focus on speed, but rather on low manufacturing costs and simplicity. With I2C you can have one or more master devices controlling one or multiple slaves, therefore it is very useful when performing multiple tasks with a single microcontroller, which is our specific case. It consists of two main lines which contain the data to be transmitted between the master and the slaves (SDA) and a clock signal (SCL), which is shared between the devices. I2C is synchronous, therefore the output is synchronised to the clock signal, which is controlled by the master. However, data is sent in packets, with a limited number of bits, therefore interrupting the transmission between each packet.
     \item SPI is a synchronous serial communication interface, which supports a single master controlling one or multiple slaves. SPI is also known as ``the 4 wire bus'' due to the fact that consists of 4 four wires: MOSI, MISO, SCLK and CS. MOSI stands for Master Output Slave Input, line used for the data sent from the master to the slave. MISO (Master Input Slave Output) is the line which does the opposite, sending data from the slave to the master. SCLK is the clock signal, used in the same way as I2C, as it is also a synchronous communication bus. Lastly, the CS (Chip Select) line will identify which slave the master is interacting with. Differently to the I2C bus, the stream of data does not need to be interrupted during transmission, as any number of bits can be sent continuously.
 \end{itemize}
 
@@ -160,7 +216,19 @@ First, we will talk about the ESP32 microcontroller GPIO pin system. The ESP32 m
 The specific version of the BME280 sensor is able to support both I2C and SPI communication. In this project it will be connected to the microcontroller using I2C communication. In the ESP32 microcontroller, the default pins for I2C (and the ones we are going to use for this project) are GPIO 21 (SDA) and 22 (SCL). We will also connect the Vin (Voltage input) line to the 3.3V pin and the Ground line (GND) to the Ground GPIO.\par
 
 In order to easily integrate the sensor with the microcontroller, it is necessary to download and import two essential external libraries specific for the sensor: The Adafruit BME280 library and the Adafruit Unified Sensor library. These are made by the manufacturer in order to easily program the sensor. After this, we just need to include the appropriate code:
-% Code here
+
+\begin{figure}[h]
+\label{code:bme}
+\lstinputlisting[language=C++]{bme.ino}
+\centering
+\caption{Sample code for integrating the BME280 sensor}
+\end{figure}
+
+\subsubsection{Integrating the Honeywell 010BDAA5 sensor}
+
+The Honeywell differential pressure sensor will be a lot simpler to integrate, as it is an analog sensor. This analog sensor only has 3 wires: Ground (GND), which is the line that will connect to the ESP32 GND pin, Voltage Input (3.3V), which is the higher voltage with respect to GND, and Voltage Output (Vout) which will contain the measurement and will connect the any Analog to Digital input GPIO. When reading an analog sensor, you are measuring voltage levels between 0V and 3.3V. The voltage measured will correspond to a value between 0 and 4095, as these analog pins have a 12-bit resolution. However, we must take into account the fact that ADC channels are not linear, so the ESP32 microcontroller will not be able to recognise properly the the highest or lowest voltages, giving the same result for voltages close to each other in these ranges.\par
+
+For this project I decided to use GPIO 34 as the pin where the Voltage Output line will connect to. Now the next step is to read the value measured by the sensor and convert it according to the specifications of the piece of hardware. In this case, the range of the sensor is from 0 bar to 10 bar, so the value measured will be converted to a final value within the sensor range.
 
 \subsubsection{Integrating the Velleman VMA438 OLED display}
 
@@ -168,15 +236,23 @@ The Velleman VMA438 OLED display will be connected in a similar way to the BME28
 
 In order to integrate this display, it is necessary to use its external library, U8g2lib. It provides specific methods that will set up the font, text position, etc. as well as very useful methods for drawing a wide variety of shapes.
 
-\subsubsection{Integrating the Honeywell 010BDAA5 sensor}
-
-The Honeywell differential pressure sensor will be a lot simpler to integrate, as it is an analog sensor. This analog sensor only has 3 wires: Ground (GND), which is the line that will connect to the ESP32 GND pin, Voltage Input (3.3V), which is the higher voltage with respect to GND, and Voltage Output (Vout) which will contain the measurement and will connect the any Analog to Digital input GPIO. When reading an analog sensor, you are measuring voltage levels between 0V and 3.3V. The voltage measured will correspond to a value between 0 and 4095, as these analog pins have a 12-bit resolution. However, we must take into account the fact that ADC channels are not linear, so the ESP will not be able to recognise properly the the highest or lowest voltages, giving the same result for voltages close to each other in these ranges.\par
-
-For this project I decided to use GPIO 34 as the pin where the Voltage Output line will connect to. Now the next step is to read the value measured by the sensor and convert it according to the specifications of the piece of hardware. In this case, the range of the sensor is from 0 bar to 10 bar, so the value measured will be converted to a final value within the sensor range.
+\begin{figure}[h]
+\label{code:oled}
+\lstinputlisting[language=C++]{oled.ino}
+\centering
+\caption{Sample code for integrating the VMA438 OLED display}
+\end{figure}
 
 \subsubsection{Integrating the microSD card adapter}
 
-The HW-125 microSD card adapter uses SPI communication in order to connect to the ESP32 microcontroller, therefore this time we will use different GPIO pins to the ones we used for I2C communication. The SCLK (Serial Clock) line will connect to GPIO 18
+The HW-125 microSD card adapter uses SPI communication in order to connect to the ESP32 microcontroller, therefore this time we will use different GPIO pins to the ones we used for I2C communication. The MOSI line will connect to GPIO 23, the MISO lie will connect to GPIO 19, the SCLK (Serial Clock) line will connect to GPIO 18 and the CS (Chip Select) line will connect to GPIO 5.
+
+\begin{figure}[h]
+\label{code:sd}
+\lstinputlisting[language=C++]{sd.ino}
+\centering
+\caption{Sample code for integrating the HW-125 microSD card adapter}
+\end{figure}
 
 \subsection{Memory usage}
 
