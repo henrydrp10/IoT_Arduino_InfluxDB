@@ -2183,24 +2183,34 @@
     <bcf:datasource type="file" datatype="bibtex">research.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">french2016digital</bcf:citekey>
-    <bcf:citekey order="2">aeris</bcf:citekey>
-    <bcf:citekey order="3">ashton</bcf:citekey>
-    <bcf:citekey order="4">suresh</bcf:citekey>
-    <bcf:citekey order="5">gartner:covid</bcf:citekey>
-    <bcf:citekey order="6">mordor</bcf:citekey>
-    <bcf:citekey order="7">digi</bcf:citekey>
-    <bcf:citekey order="8">marlabs</bcf:citekey>
-    <bcf:citekey order="9">blume</bcf:citekey>
-    <bcf:citekey order="10">chathuranga</bcf:citekey>
-    <bcf:citekey order="11">digiteum</bcf:citekey>
-    <bcf:citekey order="12">influx:time-series</bcf:citekey>
-    <bcf:citekey order="13">influx:time-series</bcf:citekey>
-    <bcf:citekey order="14">ionos</bcf:citekey>
-    <bcf:citekey order="15">influx:tokens</bcf:citekey>
-    <bcf:citekey order="16">randomnerd:gpio</bcf:citekey>
-    <bcf:citekey order="17">recording-blogs</bcf:citekey>
-    <bcf:citekey order="18">midi</bcf:citekey>
+    <bcf:citekey order="1">future-internet</bcf:citekey>
+    <bcf:citekey order="2">building-science</bcf:citekey>
+    <bcf:citekey order="3">nasar2019suitability</bcf:citekey>
+    <bcf:citekey order="4">french2016digital</bcf:citekey>
+    <bcf:citekey order="5">aeris</bcf:citekey>
+    <bcf:citekey order="6">ashton</bcf:citekey>
+    <bcf:citekey order="7">itransition</bcf:citekey>
+    <bcf:citekey order="8">suresh</bcf:citekey>
+    <bcf:citekey order="9">itransition</bcf:citekey>
+    <bcf:citekey order="10">gartner:covid</bcf:citekey>
+    <bcf:citekey order="11">mordor</bcf:citekey>
+    <bcf:citekey order="12">itransition</bcf:citekey>
+    <bcf:citekey order="13">iot-wortmann</bcf:citekey>
+    <bcf:citekey order="14">stokes</bcf:citekey>
+    <bcf:citekey order="15">digi</bcf:citekey>
+    <bcf:citekey order="16">marlabs</bcf:citekey>
+    <bcf:citekey order="17">blume</bcf:citekey>
+    <bcf:citekey order="18">chathuranga</bcf:citekey>
+    <bcf:citekey order="19">digiteum</bcf:citekey>
+    <bcf:citekey order="20">influx:time-series</bcf:citekey>
+    <bcf:citekey order="21">influx:time-series</bcf:citekey>
+    <bcf:citekey order="22">ionos</bcf:citekey>
+    <bcf:citekey order="23">grafana</bcf:citekey>
+    <bcf:citekey order="24">eduroam</bcf:citekey>
+    <bcf:citekey order="25">influx:tokens</bcf:citekey>
+    <bcf:citekey order="26">randomnerd:gpio</bcf:citekey>
+    <bcf:citekey order="27">recording-blogs</bcf:citekey>
+    <bcf:citekey order="28">midi</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

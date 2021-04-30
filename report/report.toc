@@ -3,62 +3,74 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1}Introduction}{5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.1}Aims and Objectives}{5}%
+\contentsline {subsection}{\numberline {1.1}Aims and Objectives}{6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.2}Structure}{5}%
+\contentsline {subsection}{\numberline {1.2}Structure}{6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Background}{6}%
+\contentsline {section}{\numberline {2}Background}{7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}The Internet of Things}{6}%
+\contentsline {subsection}{\numberline {2.1}The Internet of Things}{7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1}Definition}{6}%
+\contentsline {subsubsection}{\numberline {2.1.1}Definition}{7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.2}History}{6}%
+\contentsline {subsubsection}{\numberline {2.1.2}History}{7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.3}Architecture}{7}%
+\contentsline {subsubsection}{\numberline {2.1.3}Architecture}{8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.4}Applications}{7}%
+\contentsline {subsubsection}{\numberline {2.1.4}Applications}{10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Design and Approach}{8}%
+\contentsline {section}{\numberline {3}Design and Approach}{10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Project Structure}{8}%
+\contentsline {subsection}{\numberline {3.1}Project structure}{10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}System Architecture}{9}%
+\contentsline {subsection}{\numberline {3.2}Requirements}{11}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.1}Overview of the system architecture}{9}%
+\contentsline {subsection}{\numberline {3.3}System Architecture}{12}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.2}Hardware components selection}{9}%
+\contentsline {subsubsection}{\numberline {3.3.1}Overview of the system architecture}{12}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.3}Storing Time-Series Data: InfluxDB}{12}%
+\contentsline {subsubsection}{\numberline {3.3.2}Hardware components selection}{12}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.4}Data visualisation: Grafana}{13}%
+\contentsline {subsubsection}{\numberline {3.3.3}Storing Time-Series Data: InfluxDB}{15}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.5}Security and Authentication: Tokens}{13}%
+\contentsline {subsubsection}{\numberline {3.3.4}Data visualisation: Grafana}{16}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Implementation}{14}%
+\contentsline {subsubsection}{\numberline {3.3.5}Security and Authentication: Tokens}{18}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}Data collection}{14}%
+\contentsline {section}{\numberline {4}Implementation}{18}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.1}Integrating the BME 280 sensor}{15}%
+\contentsline {subsection}{\numberline {4.1}Data collection}{19}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.2}Integrating the Honeywell 010BDAA5 sensor}{15}%
+\contentsline {subsubsection}{\numberline {4.1.1}Integrating the BME 280 sensor}{19}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.3}Integrating the Velleman VMA438 OLED display}{16}%
+\contentsline {subsubsection}{\numberline {4.1.2}Integrating the Honeywell 010BDAA5 sensor}{20}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.4}Integrating the microSD card adapter}{17}%
+\contentsline {subsubsection}{\numberline {4.1.3}Integrating the Velleman VMA438 OLED display}{21}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Memory usage}{17}%
+\contentsline {subsubsection}{\numberline {4.1.4}Integrating the microSD card adapter}{21}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Monitoring system}{19}%
+\contentsline {subsection}{\numberline {4.2}Memory usage}{22}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.3.1}Monitoring status and Alert levels}{19}%
+\contentsline {subsection}{\numberline {4.3}Monitoring system}{24}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.3.2}Extra visual monitoring: Velleman VMA438}{21}%
+\contentsline {subsubsection}{\numberline {4.3.1}Monitoring status and Alert levels}{24}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4}Data Logging}{21}%
+\contentsline {subsubsection}{\numberline {4.3.2}Extra visual monitoring: Velleman VMA438}{26}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.4.1}Flash memory: Status bytes}{21}%
+\contentsline {subsection}{\numberline {4.4}Data Logging}{26}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.4.2}External storage: HW-125 microSD card adapter}{22}%
+\contentsline {subsubsection}{\numberline {4.4.1}Flash memory: Status bytes}{26}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Conclusions}{23}%
+\contentsline {subsubsection}{\numberline {4.4.2}External storage: HW-125 microSD card adapter}{28}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Evaluation and Conclusions}{29}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.1}Testing}{29}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2}Data logging results}{30}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {5.2.1}Flash memory}{30}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {5.2.2}External microSD card}{31}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.3}Reflection and Conclusions}{31}%
