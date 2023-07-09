@@ -1,5 +1,0 @@
-[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
-[0] Config.pm:307> INFO - Logfile is 'report.aux.blg'
-[87] biber:322> INFO - === Tue Apr 20, 2021, 00:33:46
-[117] Utils.pm:309> ERROR - Cannot find 'report.aux.bcf'!
-[117] Biber.pm:132> INFO - ERRORS: 1
